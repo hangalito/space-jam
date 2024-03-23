@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -49,11 +51,7 @@ fun LoadingScreen(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        Image(
-            modifier = modifier.size(240.dp),
-            painter = painterResource(id = R.drawable.loading_img),
-            contentDescription = stringResource(R.string.loading)
-        )
+        CircularProgressIndicator(strokeCap = ProgressIndicatorDefaults.CircularDeterminateStrokeCap)
     }
 }
 
@@ -68,6 +66,14 @@ fun ErrorScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = CenterHorizontally,
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_offline),
+            contentDescription = stringResource(R.string.offline),
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(100.dp)
+                .padding(4.dp)
+        )
         Text(
             text = stringResource(id = R.string.error_loading),
             modifier = Modifier.padding(4.dp)
