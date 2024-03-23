@@ -1,11 +1,13 @@
 package com.hangalo.spacejam.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme.typography
@@ -19,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -34,7 +37,7 @@ fun HomeScreen(
     when (uiState) {
         UiState.Error -> ErrorScreen(modifier, retryAction)
         UiState.Loading -> LoadingScreen(modifier)
-        is UiState.Success -> SuccessScreen(uiState.data)
+        is UiState.Success -> SuccessScreen(uiState.data, modifier)
     }
 }
 
@@ -63,7 +66,8 @@ fun ErrorScreen(
 ) {
     Column(
         modifier = modifier,
-        horizontalAlignment = CenterHorizontally
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = CenterHorizontally,
     ) {
         Text(
             text = stringResource(id = R.string.error_loading),
@@ -85,28 +89,35 @@ fun SuccessScreen(
 ) {
     ElevatedCard(modifier) {
         Column(
-            modifier = modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = CenterHorizontally
         ) {
             Text(
                 text = astronomicPicture.title,
-                style = typography.titleMedium,
+                style = typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(8.dp)
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(8.dp)
             )
             AsyncImage(
                 contentDescription = astronomicPicture.title,
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(astronomicPicture.url).crossfade(true).crossfade(1200),
+                    .data(astronomicPicture.url).crossfade(true).crossfade(1200)
+                    .build(),
                 error = painterResource(id = R.drawable.ic_broken_img),
                 placeholder = painterResource(id = R.drawable.ic_img_placeholder),
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentSize(Alignment.Center) // .size(200.dp)
             )
             Text(
-                text = astronomicPicture.title,
+                text = astronomicPicture.explanation,
                 style = typography.bodyMedium,
                 fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Justify,
                 modifier = Modifier.padding(8.dp)
             )
         }
