@@ -1,8 +1,11 @@
 package com.hangalo.spacejam.ui
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.Menu
 import androidx.compose.material3.DrawerValue
@@ -35,19 +38,27 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SpaceJamApp(
+    modifier: Modifier = Modifier,
     vModel: HomeViewModel = viewModel(factory = Factory),
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val actions = MenuSheetActions()
     val coroutineScope = rememberCoroutineScope()
 
     ModalNavigationDrawer(
-        drawerContent = { MenuSheet(actions = actions) },
-        drawerState = drawerState
+        drawerContent = {
+            MenuSheet(
+                actions = actions,
+                modifier = modifier
+                    .fillMaxHeight()
+                    .verticalScroll(rememberScrollState())
+            )
+        },
+        drawerState = drawerState,
     ) {
         Scaffold(
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
             topBar = {
                 SpaceJamTopBar(scrollBehavior) {
                     coroutineScope.launch { drawerState.open() }
@@ -57,9 +68,11 @@ fun SpaceJamApp(
             HomeScreen(
                 uiState = vModel.uiState,
                 retryAction = vModel::getTodayPicture,
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxSize()
                     .padding(innerPadding)
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)
+                    .verticalScroll(rememberScrollState())
             )
         }
     }

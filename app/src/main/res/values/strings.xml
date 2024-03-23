@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Space Jam</string>
     <string name="loading">Loading</string>
-    <string name="error_loading">Error loading the picture of today</string>
+    <string name="error_loading">Error loading the picture</string>
     <string name="retry">Try again</string>
     <string name="offline">Connection error</string>
     <string name="home">Home</string>
@@ -13,4 +13,7 @@
     <string name="save_to_cloud">Save to cloud</string>
     <string name="sign_in">Sign in</string>
     <string name="see_saved">Saved items</string>
+    <string name="date_label">Date:</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
 </resources>

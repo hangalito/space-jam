@@ -4,31 +4,23 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.hangalo.spacejam.R
 import com.hangalo.spacejam.model.AstronomicPicture
 import com.hangalo.spacejam.ui.screens.UiState
+import com.hangalo.spacejam.ui.screens.utils.AstronomicPictureCard
 
 @Composable
 fun HomeScreen(
@@ -52,7 +44,7 @@ fun LoadingScreen(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        CircularProgressIndicator(strokeCap = ProgressIndicatorDefaults.CircularDeterminateStrokeCap)
+        CircularProgressIndicator()
     }
 }
 
@@ -93,46 +85,5 @@ fun SuccessScreen(
     astronomicPicture: AstronomicPicture,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier.fillMaxWidth(), horizontalAlignment = CenterHorizontally
-    ) {
-        Text(
-            text = astronomicPicture.title,
-            style = typography.titleLarge,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .align(Alignment.Start)
-                .padding(8.dp)
-        )
-        Box {
-            Image(
-                painter = painterResource(id = R.drawable.loading_img),
-                contentDescription = stringResource(id = R.string.loading),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(16f / 9f)
-            )
-            AsyncImage(
-                contentDescription = astronomicPicture.title,
-                model = ImageRequest.Builder(LocalContext.current).data(astronomicPicture.url)
-                    .crossfade(true).crossfade(1200).build(),
-                error = painterResource(id = R.drawable.ic_broken_img),
-                placeholder = painterResource(id = R.drawable.ic_img_placeholder),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(16f / 9f)
-                    .padding(8.dp)
-            )
-        }
-        Text(
-            text = astronomicPicture.explanation,
-            style = typography.bodyMedium,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Justify,
-            modifier = Modifier.padding(12.dp)
-        )
-    }
+    AstronomicPictureCard(astronomicPicture, modifier)
 }
