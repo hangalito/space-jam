@@ -41,3 +41,4 @@ androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "l
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
+secretsGradle = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version = '2.0.1' }

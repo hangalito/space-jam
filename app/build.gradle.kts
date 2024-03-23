@@ -15,9 +15,16 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        buildConfigField("String", "NASA_API_KEY", "\"${project.properties["NASA_API_KEY"]}\"")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+
+        buildFeatures {
+            buildConfig = true
+            compose = true
         }
     }
 
