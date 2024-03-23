@@ -5,7 +5,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.hangalo.spacejam.SpaceJamApplication
-import com.hangalo.spacejam.ui.screens.HomeViewModel
+import com.hangalo.spacejam.ui.screens.home.HomeViewModel
 
 
 object ViewModelProvider {

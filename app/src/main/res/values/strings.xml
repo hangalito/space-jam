@@ -4,4 +4,13 @@
     <string name="error_loading">Error loading the picture of today</string>
     <string name="retry">Try again</string>
     <string name="offline">Connection error</string>
+    <string name="home">Home</string>
+    <string name="see_yesterday_pic">See yesterday picture</string>
+    <string name="see_2d_pic">See picture of 2 days ago</string>
+    <string name="select_date">Choose day</string>
+    <string name="select_date_from">See pictures from</string>
+    <string name="select_date_range">Select interval</string>
+    <string name="save_to_cloud">Save to cloud</string>
+    <string name="sign_in">Sign in</string>
+    <string name="see_saved">Saved items</string>
 </resources>

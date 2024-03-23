@@ -1,4 +1,4 @@
-package com.hangalo.spacejam.ui.screens
+package com.hangalo.spacejam.ui.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +28,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.hangalo.spacejam.R
 import com.hangalo.spacejam.model.AstronomicPicture
+import com.hangalo.spacejam.ui.screens.UiState
 
 @Composable
 fun HomeScreen(
