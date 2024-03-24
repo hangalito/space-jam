@@ -16,18 +16,6 @@ import androidx.compose.ui.unit.dp
 import com.hangalo.spacejam.R
 
 
-// TODO: remove the properties initializers in production.
-data class MenuSheetActions(
-    val onHomeClick: () -> Unit = {},
-    val onYesterdayClick: () -> Unit = {},
-    val on2daysClick: () -> Unit = {},
-    val onSelectDateClick: () -> Unit = {},
-    val onSelectDateRangeClick: () -> Unit = {},
-    val onSeeSavedClick: () -> Unit = {},
-    val onUploadClick: () -> Unit = {},
-    val onSignInClick: () -> Unit = {},
-)
-
 @Composable
 fun MenuSheet(
     modifier: Modifier = Modifier,
@@ -43,7 +31,7 @@ fun MenuSheet(
         NavigationDrawerItem(
             label = { Text(stringResource(id = R.string.home)) },
             selected = false,
-            onClick = { actions.onHomeClick() },
+            onClick = actions::onHomeClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_today),
@@ -54,7 +42,7 @@ fun MenuSheet(
         NavigationDrawerItem(
             label = { Text(stringResource(id = R.string.see_yesterday_pic)) },
             selected = false,
-            onClick = { actions.onYesterdayClick() },
+            onClick = actions::onYesterdayClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_calendar),
@@ -65,7 +53,7 @@ fun MenuSheet(
         NavigationDrawerItem(
             label = { Text(stringResource(id = R.string.see_2d_pic)) },
             selected = false,
-            onClick = { actions.on2daysClick() },
+            onClick = actions::on2daysClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_calendar),
@@ -76,7 +64,7 @@ fun MenuSheet(
         NavigationDrawerItem(
             label = { Text(stringResource(id = R.string.select_date)) },
             selected = false,
-            onClick = { actions.onSelectDateClick() },
+            onClick = actions::onSelectDateClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_select_date),
@@ -87,7 +75,7 @@ fun MenuSheet(
         NavigationDrawerItem(
             label = { Text(stringResource(id = R.string.select_date_range)) },
             selected = false,
-            onClick = { actions.onSelectDateRangeClick() },
+            onClick = actions::onSelectDateRangeClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_date_range),
@@ -98,7 +86,7 @@ fun MenuSheet(
         NavigationDrawerItem(
             label = { Text(stringResource(id = R.string.see_saved)) },
             selected = false,
-            onClick = { actions.onSeeSavedClick() },
+            onClick = actions::onSeeSavedClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_saved),
@@ -120,7 +108,7 @@ fun MenuSheet(
         NavigationDrawerItem(
             label = { Text(stringResource(id = R.string.sign_in)) },
             selected = false,
-            onClick = { actions.onSignInClick() },
+            onClick = actions::onSignInClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_account),
@@ -134,6 +122,38 @@ fun MenuSheet(
 @Preview
 @Composable
 private fun MenuSheetPreview() {
-    val mockData = MenuSheetActions {}
+    val mockData = object : MenuSheetActions {
+        override fun onHomeClick() {
+            TODO("Not yet implemented")
+        }
+
+        override fun onYesterdayClick() {
+            TODO("Not yet implemented")
+        }
+
+        override fun on2daysClick() {
+            TODO("Not yet implemented")
+        }
+
+        override fun onSelectDateClick() {
+            TODO("Not yet implemented")
+        }
+
+        override fun onSelectDateRangeClick() {
+            TODO("Not yet implemented")
+        }
+
+        override fun onSeeSavedClick() {
+            TODO("Not yet implemented")
+        }
+
+        override fun onUploadClick() {
+            TODO("Not yet implemented")
+        }
+
+        override fun onSignInClick() {
+            TODO("Not yet implemented")
+        }
+    }
     MenuSheet(actions = mockData)
 }

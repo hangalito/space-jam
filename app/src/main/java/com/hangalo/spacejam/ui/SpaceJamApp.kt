@@ -11,6 +11,7 @@ import androidx.compose.material.icons.twotone.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -40,6 +41,7 @@ import com.hangalo.spacejam.ui.screens.home.HomeScreen
 import com.hangalo.spacejam.ui.screens.home.HomeViewModel
 import com.hangalo.spacejam.ui.utils.MenuSheet
 import com.hangalo.spacejam.ui.utils.MenuSheetActions
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
@@ -47,7 +49,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun SpaceJamApp(
     modifier: Modifier = Modifier,
-    vModel: HomeViewModel = viewModel(factory = Factory),
+    viewModel: HomeViewModel = viewModel(factory = Factory),
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -56,24 +58,10 @@ fun SpaceJamApp(
         rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
 
     var isVisible: Boolean by remember { mutableStateOf(false) }
-    val actions = MenuSheetActions(
-        onHomeClick = {
-            coroutineScope.launch { drawerState.close() }
-            vModel.getTodayPicture()
-        },
-        onYesterdayClick = {
-            coroutineScope.launch { drawerState.close() }
-            vModel.getYesterdayPicture()
-        },
-        on2daysClick = {
-            coroutineScope.launch { drawerState.close() }
-            vModel.get2daysAgoPicture()
-        },
-        onSelectDateClick = {
-            coroutineScope.launch { drawerState.close() }
-            isVisible = true
-        }
-    )
+
+    val actions = MenuSheetActions.defaultActions(viewModel, drawerState, coroutineScope) {
+        isVisible = false
+    }
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -95,8 +83,8 @@ fun SpaceJamApp(
             }
         ) { innerPadding: PaddingValues ->
             HomeScreen(
-                uiState = vModel.uiState,
-                retryAction = vModel.retry,
+                uiState = viewModel.uiState,
+                retryAction = viewModel.retry,
                 modifier = modifier
                     .fillMaxSize()
                     .padding(innerPadding)
@@ -113,7 +101,7 @@ fun SpaceJamApp(
                 confirmButton = {
                     Button(
                         onClick = {
-                            vModel.getPictureByDate(datePickerState.selectedDateMillis!!)
+                            viewModel.getPictureByDate(datePickerState.selectedDateMillis!!)
                             isVisible = false
                         },
                     ) {
@@ -129,6 +117,49 @@ fun SpaceJamApp(
                 DatePicker(state = datePickerState)
             }
         }
+    }
+}
+
+private inline fun MenuSheetActions.Companion.defaultActions(
+    vModel: HomeViewModel,
+    drawerState: DrawerState,
+    coroutineScope: CoroutineScope,
+    crossinline changeVisibility: () -> Unit,
+): MenuSheetActions {
+    return object : MenuSheetActions {
+        override fun onHomeClick() {
+            coroutineScope.launch { drawerState.close() }
+            vModel.getTodayPicture()
+        }
+
+        override fun onYesterdayClick() {
+            coroutineScope.launch { drawerState.close() }
+            vModel.getYesterdayPicture()
+        }
+
+        override fun on2daysClick() {
+            coroutineScope.launch { drawerState.close() }
+            vModel.get2daysAgoPicture()
+        }
+
+        override fun onSelectDateClick() {
+            coroutineScope.launch { drawerState.close() }
+            changeVisibility()
+        }
+
+        override fun onSelectDateRangeClick() {
+
+        }
+
+        override fun onSeeSavedClick() {
+        }
+
+        override fun onUploadClick() {
+        }
+
+        override fun onSignInClick() {
+        }
+
     }
 }
 
