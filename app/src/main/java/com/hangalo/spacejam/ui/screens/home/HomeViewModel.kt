@@ -32,10 +32,10 @@ class HomeViewModel(private val apodRepository: APODRepository) : ViewModel() {
                 UiState.Success(apodRepository.getTodayPicture())
             } catch (ex: HttpException) {
                 Log.d("HttpException", ex.localizedMessage as String)
-                UiState.Error
+                UiState.Error.Error
             } catch (ex: IOException) {
                 Log.d("IOException", ex.localizedMessage as String)
-                UiState.Error
+                UiState.Error.Error
             }
         }
     }
@@ -48,10 +48,10 @@ class HomeViewModel(private val apodRepository: APODRepository) : ViewModel() {
                 UiState.Success(apodRepository.getYesterdayPicture())
             } catch (ex: HttpException) {
                 Log.d("HttpException", ex.localizedMessage as String)
-                UiState.Error
+                UiState.Error.Error
             } catch (ex: IOException) {
                 Log.d("IOException", ex.localizedMessage as String)
-                UiState.Error
+                UiState.Error.Error
             }
         }
     }
@@ -64,10 +64,10 @@ class HomeViewModel(private val apodRepository: APODRepository) : ViewModel() {
                 UiState.Success(apodRepository.get2daysAgoPicture())
             } catch (ex: HttpException) {
                 Log.d("HttpException", ex.localizedMessage as String)
-                UiState.Error
+                UiState.Error.Error
             } catch (ex: IOException) {
                 Log.d("IOException", ex.localizedMessage as String)
-                UiState.Error
+                UiState.Error.Error
             }
         }
     }
@@ -79,11 +79,17 @@ class HomeViewModel(private val apodRepository: APODRepository) : ViewModel() {
             uiState = try {
                 UiState.Success(apodRepository.getPictureByDate(dateMillis))
             } catch (ex: HttpException) {
+                var err: UiState = UiState.Error.Error
+                val code = ex.code()
                 Log.d("HttpException", ex.localizedMessage as String)
-                UiState.Error
+                if (code == 400) {
+                    err =
+                        UiState.Error.InvalidDate("Date must be between Jun 16, 1995 and Mar 24, 2024.")
+                }
+                err
             } catch (ex: IOException) {
                 Log.d("IOException", ex.localizedMessage as String)
-                UiState.Error
+                UiState.Error.Error
             }
         }
     }
