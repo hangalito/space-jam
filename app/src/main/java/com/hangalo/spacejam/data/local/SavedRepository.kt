@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SavedRepository {
 
-    suspend fun getAll(): Flow<List<AstronomicPicture>>
+    suspend fun getAllStream(): Flow<List<AstronomicPicture>>
 
     suspend fun getByDate(date: String): Flow<AstronomicPicture?>
 

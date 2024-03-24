@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 class OfflineSavedRepository(private val astronomicPictureDao: AstronomicPictureDao) :
     SavedRepository {
-    override suspend fun getAll(): Flow<List<AstronomicPicture>> {
+    override suspend fun getAllStream(): Flow<List<AstronomicPicture>> {
         return astronomicPictureDao.getAll()
     }
 
