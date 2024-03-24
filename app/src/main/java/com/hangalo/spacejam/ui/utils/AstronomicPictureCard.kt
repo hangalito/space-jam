@@ -1,4 +1,4 @@
-package com.hangalo.spacejam.ui.screens.utils
+package com.hangalo.spacejam.ui.utils
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

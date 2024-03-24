@@ -16,4 +16,6 @@
     <string name="date_label">Date:</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.hangalo.spacejam.ui.screens.utils
+package com.hangalo.spacejam.ui.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource

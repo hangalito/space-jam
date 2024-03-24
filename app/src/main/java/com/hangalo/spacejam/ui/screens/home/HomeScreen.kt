@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.hangalo.spacejam.R
 import com.hangalo.spacejam.model.AstronomicPicture
 import com.hangalo.spacejam.ui.screens.UiState
-import com.hangalo.spacejam.ui.screens.utils.AstronomicPictureCard
+import com.hangalo.spacejam.ui.utils.AstronomicPictureCard
 
 @Composable
 fun HomeScreen(

@@ -1,4 +1,4 @@
-package com.hangalo.spacejam.ui.screens.utils
+package com.hangalo.spacejam.ui.utils
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DismissibleDrawerSheet
@@ -134,6 +134,6 @@ fun MenuSheet(
 @Preview
 @Composable
 private fun MenuSheetPreview() {
-    val mockData = MenuSheetActions()
+    val mockData = MenuSheetActions {}
     MenuSheet(actions = mockData)
 }
