@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.google.dev.tools)
 }
 
 android {
@@ -81,6 +82,11 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.kotlin.serialization)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Room library
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
 
     // Testing
     testImplementation(libs.junit)
