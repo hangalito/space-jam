@@ -16,4 +16,20 @@ data class AstronomicPicture(
     @ColumnInfo("service_version") @SerialName("service_version") val serviceName: String,
     val title: String,
     val url: String,
-)
+) {
+    @SerialName("copyright")
+    lateinit var copyright: String
+
+    constructor(
+        copyright: String,
+        date: String,
+        explanation: String,
+        hdUrl: String,
+        mediaType: String,
+        serviceName: String,
+        title: String,
+        url: String,
+    ) : this(date, explanation, hdUrl, mediaType, serviceName, title, url) {
+        this.copyright=copyright
+    }
+}

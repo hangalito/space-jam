@@ -3,9 +3,7 @@ package com.hangalo.spacejam.ui.screens.utils
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.hangalo.spacejam.R
-import com.hangalo.spacejam.data.local.SavedRepository
 import com.hangalo.spacejam.model.AstronomicPicture
-import kotlinx.coroutines.flow.map
 import java.sql.Date
 
 
@@ -20,11 +18,4 @@ fun AstronomicPicture.getDate(): String {
         yesterday -> stringResource(id = R.string.yesterday)
         else -> date
     }
-}
-
-
-suspend inline fun AstronomicPicture.isSaved(savedRepository: SavedRepository): Boolean {
-    var savedItems: List<AstronomicPicture> = listOf()
-    savedRepository.getAllStream().map { savedItems = it }
-    return savedItems.contains(this)
 }
