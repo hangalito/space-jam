@@ -17,8 +17,9 @@ data class AstronomicPicture(
     val title: String,
     val url: String,
 ) {
+    @ColumnInfo("copyright")
     @SerialName("copyright")
-    lateinit var copyright: String
+    var copyright: String = ""
 
     constructor(
         copyright: String,
@@ -30,6 +31,6 @@ data class AstronomicPicture(
         title: String,
         url: String,
     ) : this(date, explanation, hdUrl, mediaType, serviceName, title, url) {
-        this.copyright=copyright
+        this.copyright = copyright
     }
 }
