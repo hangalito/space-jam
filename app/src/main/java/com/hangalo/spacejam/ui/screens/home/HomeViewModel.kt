@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hangalo.spacejam.R
 import com.hangalo.spacejam.data.remote.apod.APODRepository
 import com.hangalo.spacejam.ui.screens.UiState
 import kotlinx.coroutines.launch
@@ -84,7 +85,7 @@ class HomeViewModel(private val apodRepository: APODRepository) : ViewModel() {
                 Log.d("HttpException", ex.localizedMessage as String)
                 if (code == 400) {
                     err =
-                        UiState.Error.InvalidDate("Date must be between Jun 16, 1995 and Mar 24, 2024.")
+                        UiState.Error.InvalidDate(R.string.invalid_date)
                 }
                 err
             } catch (ex: IOException) {

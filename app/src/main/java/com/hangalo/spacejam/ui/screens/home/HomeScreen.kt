@@ -33,7 +33,7 @@ fun HomeScreen(
     when (uiState) {
         UiState.Loading -> LoadingScreen(modifier)
         is UiState.Success -> SuccessScreen(uiState.data, modifier)
-        is UiState.Error -> ErrorScreen(modifier, uiState, retryAction)
+        is UiState.Error -> ErrorScreen(uiState, modifier, retryAction)
     }
 }
 
@@ -53,8 +53,8 @@ fun LoadingScreen(
 
 @Composable
 fun ErrorScreen(
+    state: UiState.Error,
     modifier: Modifier = Modifier,
-    errorState: UiState.Error = UiState.Error.Error,
     retryAction: () -> Unit,
 ) {
     Column(
@@ -62,9 +62,9 @@ fun ErrorScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = CenterHorizontally,
     ) {
-        if (errorState is UiState.Error.InvalidDate) {
+        if (state is UiState.Error.InvalidDate) {
             Text(
-                text = errorState.msg,
+                text = stringResource(state.msg),
                 style = typography.titleMedium,
                 textAlign = TextAlign.Center
             )

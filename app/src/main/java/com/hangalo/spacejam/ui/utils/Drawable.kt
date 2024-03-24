@@ -29,90 +29,90 @@ fun MenuSheet(
             modifier = Modifier.padding(8.dp)
         )
         NavigationDrawerItem(
-            label = { Text(stringResource(id = R.string.home)) },
+            label = { Text(stringResource(id = R.string.menu_today)) },
             selected = false,
             onClick = actions::onHomeClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_today),
-                    contentDescription = stringResource(id = R.string.home)
+                    contentDescription = stringResource(id = R.string.menu_today)
                 )
             }
         )
         NavigationDrawerItem(
-            label = { Text(stringResource(id = R.string.see_yesterday_pic)) },
+            label = { Text(stringResource(id = R.string.menu_yesterday)) },
             selected = false,
             onClick = actions::onYesterdayClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_calendar),
-                    contentDescription = stringResource(id = R.string.see_yesterday_pic)
+                    contentDescription = stringResource(id = R.string.menu_yesterday)
                 )
             }
         )
         NavigationDrawerItem(
-            label = { Text(stringResource(id = R.string.see_2d_pic)) },
+            label = { Text(stringResource(id = R.string.menu_two_days_ago)) },
             selected = false,
             onClick = actions::on2daysClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_calendar),
-                    contentDescription = stringResource(id = R.string.see_2d_pic)
+                    contentDescription = stringResource(id = R.string.menu_two_days_ago)
                 )
             }
         )
         NavigationDrawerItem(
-            label = { Text(stringResource(id = R.string.select_date)) },
+            label = { Text(stringResource(id = R.string.menu_choose_day)) },
             selected = false,
             onClick = actions::onSelectDateClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_select_date),
-                    contentDescription = stringResource(id = R.string.select_date)
+                    contentDescription = stringResource(id = R.string.menu_choose_day)
                 )
             }
         )
         NavigationDrawerItem(
-            label = { Text(stringResource(id = R.string.select_date_range)) },
+            label = { Text(stringResource(id = R.string.menu_date_range)) },
             selected = false,
             onClick = actions::onSelectDateRangeClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_date_range),
-                    contentDescription = stringResource(id = R.string.select_date_range)
+                    contentDescription = stringResource(id = R.string.menu_date_range)
                 )
             }
         )
         NavigationDrawerItem(
-            label = { Text(stringResource(id = R.string.see_saved)) },
+            label = { Text(stringResource(id = R.string.menu_see_saved)) },
             selected = false,
             onClick = actions::onSeeSavedClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_saved),
-                    contentDescription = stringResource(id = R.string.see_saved)
+                    contentDescription = stringResource(id = R.string.menu_see_saved)
                 )
             }
         )
         NavigationDrawerItem(
-            label = { Text(stringResource(id = R.string.save_to_cloud)) },
+            label = { Text(stringResource(id = R.string.menu_upload)) },
             selected = false,
             onClick = { actions.onUploadClick() },
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_upload_data),
-                    contentDescription = stringResource(id = R.string.save_to_cloud)
+                    contentDescription = stringResource(id = R.string.menu_upload)
                 )
             }
         )
         NavigationDrawerItem(
-            label = { Text(stringResource(id = R.string.sign_in)) },
+            label = { Text(stringResource(id = R.string.menu_sign_in)) },
             selected = false,
             onClick = actions::onSignInClick,
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_account),
-                    contentDescription = stringResource(id = R.string.sign_in)
+                    contentDescription = stringResource(id = R.string.menu_sign_in)
                 )
             }
         )
