@@ -6,14 +6,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hangalo.spacejam.data.SpaceJamRepository
+import com.hangalo.spacejam.data.remote.apod.APODRepository
 import com.hangalo.spacejam.ui.screens.UiState
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
 
-class HomeViewModel(private val repository: SpaceJamRepository) : ViewModel() {
+class HomeViewModel(private val repository: APODRepository) : ViewModel() {
     var uiState: UiState by mutableStateOf(UiState.Loading)
         private set
 

@@ -1,8 +1,8 @@
-package com.hangalo.spacejam.data
+package com.hangalo.spacejam.data.remote.apod
 
 import com.hangalo.spacejam.model.AstronomicPicture
 
 
-interface SpaceJamRepository {
+interface APODRepository {
     suspend fun getTodayPicture(): AstronomicPicture
 }
