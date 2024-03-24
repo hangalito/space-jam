@@ -1,6 +1,8 @@
 package com.hangalo.spacejam.ui.utils
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.DismissibleDrawerSheet
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -45,8 +47,9 @@ fun MenuSheet(
             onClick = actions::onYesterdayClick,
             icon = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_calendar),
-                    contentDescription = stringResource(id = R.string.menu_yesterday)
+                    painter = painterResource(id = R.drawable.ic_yesterday),
+                    contentDescription = stringResource(id = R.string.menu_yesterday),
+                    modifier = Modifier.size(Icons.defaultIconSize())
                 )
             }
         )
@@ -56,7 +59,7 @@ fun MenuSheet(
             onClick = actions::on2daysClick,
             icon = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_calendar),
+                    painter = painterResource(id = R.drawable.ic_two_days_ago),
                     contentDescription = stringResource(id = R.string.menu_two_days_ago)
                 )
             }
@@ -79,7 +82,7 @@ fun MenuSheet(
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_date_range),
-                    contentDescription = stringResource(id = R.string.menu_date_range)
+                    contentDescription = stringResource(id = R.string.menu_date_range),
                 )
             }
         )
@@ -112,7 +115,7 @@ fun MenuSheet(
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_account),
-                    contentDescription = stringResource(id = R.string.menu_sign_in)
+                    contentDescription = stringResource(id = R.string.menu_sign_in),
                 )
             }
         )
@@ -123,37 +126,21 @@ fun MenuSheet(
 @Composable
 private fun MenuSheetPreview() {
     val mockData = object : MenuSheetActions {
-        override fun onHomeClick() {
-            TODO("Not yet implemented")
-        }
+        override fun onHomeClick() {}
 
-        override fun onYesterdayClick() {
-            TODO("Not yet implemented")
-        }
+        override fun onYesterdayClick() {}
 
-        override fun on2daysClick() {
-            TODO("Not yet implemented")
-        }
+        override fun on2daysClick() {}
 
-        override fun onSelectDateClick() {
-            TODO("Not yet implemented")
-        }
+        override fun onSelectDateClick() {}
 
-        override fun onSelectDateRangeClick() {
-            TODO("Not yet implemented")
-        }
+        override fun onSelectDateRangeClick() {}
 
-        override fun onSeeSavedClick() {
-            TODO("Not yet implemented")
-        }
+        override fun onSeeSavedClick() {}
 
-        override fun onUploadClick() {
-            TODO("Not yet implemented")
-        }
+        override fun onUploadClick() {}
 
-        override fun onSignInClick() {
-            TODO("Not yet implemented")
-        }
+        override fun onSignInClick() {}
     }
     MenuSheet(actions = mockData)
 }

@@ -1,7 +1,11 @@
 package com.hangalo.spacejam.ui.utils
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.twotone.DateRange
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.DpSize
 import com.hangalo.spacejam.R
 import com.hangalo.spacejam.model.AstronomicPicture
 import java.sql.Date
@@ -19,3 +23,9 @@ fun AstronomicPicture.getDate(): String {
         else -> date
     }
 }
+
+
+fun Icons.defaultIconSize(): DpSize = DpSize(
+    this.Default.DateRange.defaultWidth,
+    this.Default.DateRange.defaultHeight
+)
