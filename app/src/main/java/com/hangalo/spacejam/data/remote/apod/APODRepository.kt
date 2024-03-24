@@ -7,4 +7,6 @@ interface APODRepository {
     suspend fun getTodayPicture(): AstronomicPicture
 
     suspend fun getYesterdayPicture(): AstronomicPicture
+
+    suspend fun get2daysAgoPicture(): AstronomicPicture
 }

@@ -46,6 +46,7 @@ fun SpaceJamApp(
     val actions = MenuSheetActions(
         onHomeClick = vModel::getTodayPicture,
         onYesterdayClick = vModel::getYesterdayPicture,
+        on2daysClick = vModel::get2daysAgoPicture
     )
     val coroutineScope = rememberCoroutineScope()
 

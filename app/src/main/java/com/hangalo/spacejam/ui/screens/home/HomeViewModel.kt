@@ -51,4 +51,19 @@ class HomeViewModel(private val apodRepository: APODRepository) : ViewModel() {
             }
         }
     }
+
+    fun get2daysAgoPicture() {
+        uiState = UiState.Loading
+        viewModelScope.launch {
+            uiState = try {
+                UiState.Success(apodRepository.get2daysAgoPicture())
+            } catch (ex: HttpException) {
+                Log.d("HttpException", ex.localizedMessage as String)
+                UiState.Error
+            } catch (ex: IOException) {
+                Log.d("IOException", ex.localizedMessage as String)
+                UiState.Error
+            }
+        }
+    }
 }

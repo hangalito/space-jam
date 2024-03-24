@@ -11,5 +11,5 @@ interface ApiService {
     suspend fun getTodayPicture(): AstronomicPicture
 
     @GET("apod?api_key=${BuildConfig.NASA_API_KEY}")
-    suspend fun getYesterdayPicture(@Query("date") date: String): AstronomicPicture
+    suspend fun getPictureByDate(@Query("date") date: String): AstronomicPicture
 }

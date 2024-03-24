@@ -13,6 +13,12 @@ data class NetworkRepository(private val apiService: ApiService) : APODRepositor
     override suspend fun getYesterdayPicture(): AstronomicPicture {
         val today = Date(System.currentTimeMillis()).toString().split("-")
         val date = "${today.first()}-${today[1]}-${today.last().toInt() - 1}"
-        return apiService.getYesterdayPicture(date)
+        return apiService.getPictureByDate(date)
+    }
+
+    override suspend fun get2daysAgoPicture(): AstronomicPicture {
+        val today = Date(System.currentTimeMillis()).toString().split("-")
+        val date = "${today.first()}-${today[1]}-${today.last().toInt() - 2}"
+        return apiService.getPictureByDate(date)
     }
 }
