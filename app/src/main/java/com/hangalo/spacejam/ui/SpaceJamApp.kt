@@ -43,7 +43,10 @@ fun SpaceJamApp(
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    val actions = MenuSheetActions()
+    val actions = MenuSheetActions(
+        onHomeClick = vModel::getTodayPicture,
+        onYesterdayClick = vModel::getYesterdayPicture,
+    )
     val coroutineScope = rememberCoroutineScope()
 
     ModalNavigationDrawer(
