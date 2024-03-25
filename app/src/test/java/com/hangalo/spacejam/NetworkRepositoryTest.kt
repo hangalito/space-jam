@@ -1,6 +1,7 @@
 package com.hangalo.spacejam
 
 import com.hangalo.spacejam.data.FakeDatasource
+import com.hangalo.spacejam.data.FakeDatasource.astronomicPictures
 import com.hangalo.spacejam.data.remote.FakeApiService
 import com.hangalo.spacejam.data.remote.apod.NetworkRepository
 import com.hangalo.spacejam.rules.TestDispatcherRule
@@ -56,8 +57,8 @@ class NetworkRepositoryTest {
     @Test
     fun networkAstronomicPicturesRepository_getPictureFromDate_verifyPicture() = runTest {
         val repository = NetworkRepository(FakeApiService())
-        val startDate = Date(System.currentTimeMillis()).toString()
-        val actual = listOf(FakeDatasource.astronomicPictures.first())
+        val startDate = FakeDatasource.twoDaysAgo().date
+        val actual = listOf(astronomicPictures.first(), astronomicPictures[1],astronomicPictures[2])
         assertEquals(
             actual,
             repository.getPicturesFrom(startDate)
