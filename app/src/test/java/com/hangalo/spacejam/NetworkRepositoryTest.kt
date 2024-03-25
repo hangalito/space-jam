@@ -1,7 +1,7 @@
 package com.hangalo.spacejam
 
-import com.hangalo.spacejam.data.remote.FakeApiService
 import com.hangalo.spacejam.data.FakeDatasource
+import com.hangalo.spacejam.data.remote.FakeApiService
 import com.hangalo.spacejam.data.remote.apod.NetworkRepository
 import com.hangalo.spacejam.rules.TestDispatcherRule
 import kotlinx.coroutines.test.runTest
@@ -19,25 +19,48 @@ class NetworkRepositoryTest {
     @Test
     fun networkAstronomicPicturesRepository_getTodayPicture_verifyPicture() = runTest {
         val repository = NetworkRepository(FakeApiService())
-        assertEquals(repository.getTodayPicture(), FakeDatasource.today())
+        assertEquals(
+            FakeDatasource.today(),
+            repository.getTodayPicture()
+        )
     }
 
     @Test
     fun networkAstronomicPicturesRepository_getYesterdayPicture_verifyPicture() = runTest {
         val repository = NetworkRepository(FakeApiService())
-        assertEquals(repository.getYesterdayPicture(), FakeDatasource.yesterday())
+        assertEquals(
+            FakeDatasource.yesterday(),
+            repository.getYesterdayPicture()
+        )
     }
 
     @Test
     fun networkAstronomicPicturesRepository_get2daysAgoPicture_verifyPicture() = runTest {
         val repository = NetworkRepository(FakeApiService())
-        assertEquals(repository.get2daysAgoPicture(), FakeDatasource.twoDaysAgo())
+        assertEquals(
+            FakeDatasource.twoDaysAgo(),
+            repository.get2daysAgoPicture()
+        )
     }
 
     @Test
     fun networkAstronomicPicturesRepository_getPictureByDate_verifyPicture() = runTest {
         val repository = NetworkRepository(FakeApiService())
         val dateMillis = Date.valueOf("2004-11-10").time
-        assertEquals(repository.getPictureByDate(dateMillis), FakeDatasource.getByDate(dateMillis))
+        assertEquals(
+            FakeDatasource.getByDate(dateMillis),
+            repository.getPictureByDate(dateMillis)
+        )
+    }
+
+    @Test
+    fun networkAstronomicPicturesRepository_getPictureFromDate_verifyPicture() = runTest {
+        val repository = NetworkRepository(FakeApiService())
+        val startDate = Date(System.currentTimeMillis()).toString()
+        val actual = listOf(FakeDatasource.astronomicPictures.first())
+        assertEquals(
+            actual,
+            repository.getPicturesFrom(startDate)
+        )
     }
 }

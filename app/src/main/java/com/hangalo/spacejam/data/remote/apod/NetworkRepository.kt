@@ -26,4 +26,8 @@ data class NetworkRepository(private val apiService: ApiService) : APODRepositor
         val date = Date(dateMillis).toString()
         return apiService.getPictureByDate(date)
     }
+
+    override suspend fun getPicturesFrom(starDate: String): List<AstronomicPicture> {
+        return apiService.getPicturesFrom(starDate)
+    }
 }
