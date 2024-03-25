@@ -75,6 +75,13 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    // Compose Navigation
+    implementation(libs.navigation.compose)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.livedata.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.viewmodel.savedstate)
+
     // Retrofit
     implementation(libs.jakewharton.retrofit)
     implementation(libs.squareup.retrofit2)

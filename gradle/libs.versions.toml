@@ -15,6 +15,7 @@ kotlinSerializationVersion = "1.6.0"
 serialization = "1.9.10"
 lifecycleViewmodelCompose = "2.7.0"
 roomVersion = "2.5.2"
+lifecycleVersion = "2.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +41,11 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version = '1.7.3' }
+lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleVersion" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleVersion" }
+lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleVersion" }
+lifecycle-viewmodel-savedstate = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-savedstate", version.ref = "lifecycleVersion" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.7" }
 
 
 [plugins]
@@ -48,4 +54,4 @@ jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "k
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
 secretsGradle = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version = '2.0.1' }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
-google-dev-tools = { id = "com.google.devtools.ksp", version = '1.8.21-1.0.11' }
+google-dev-tools = { id = "com.google.devtools.ksp", version = '1.9.23-1.0.19' }
