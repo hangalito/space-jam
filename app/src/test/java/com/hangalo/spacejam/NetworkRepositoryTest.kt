@@ -3,14 +3,18 @@ package com.hangalo.spacejam
 import com.hangalo.spacejam.data.remote.FakeApiService
 import com.hangalo.spacejam.data.FakeDatasource
 import com.hangalo.spacejam.data.remote.apod.NetworkRepository
+import com.hangalo.spacejam.rules.TestDispatcherRule
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Rule
 import org.junit.Test
 import java.sql.Date
 
 
 class NetworkRepositoryTest {
 
+    @get:Rule
+    val testDispatcher = TestDispatcherRule()
 
     @Test
     fun networkAstronomicPicturesRepository_getTodayPicture_verifyPicture() = runTest {

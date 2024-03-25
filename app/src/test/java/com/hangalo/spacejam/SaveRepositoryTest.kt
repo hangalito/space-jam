@@ -4,13 +4,18 @@ import com.hangalo.spacejam.data.FakeDatasource
 import com.hangalo.spacejam.data.local.FakeSavedRepository
 import com.hangalo.spacejam.data.local.OfflineSavedRepository
 import com.hangalo.spacejam.model.AstronomicPicture
+import com.hangalo.spacejam.rules.TestDispatcherRule
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
+import org.junit.Rule
 import org.junit.Test
 import java.sql.Date
 
 
 class SaveRepositoryTest {
+
+    @get:Rule
+    val testDispatcher = TestDispatcherRule()
 
     @Test
     fun savedRepository_getAll_verify() = runTest {
