@@ -60,7 +60,7 @@ fun SpaceJamApp(
     var isVisible: Boolean by remember { mutableStateOf(false) }
 
     val actions = MenuSheetActions.defaultActions(viewModel, drawerState, coroutineScope) {
-        isVisible = false
+        isVisible = true
     }
 
     ModalNavigationDrawer(
@@ -120,11 +120,11 @@ fun SpaceJamApp(
     }
 }
 
-private inline fun MenuSheetActions.Companion.defaultActions(
+private fun MenuSheetActions.Companion.defaultActions(
     vModel: HomeViewModel,
     drawerState: DrawerState,
     coroutineScope: CoroutineScope,
-    crossinline changeVisibility: () -> Unit,
+    changeVisibility: () -> Unit,
 ): MenuSheetActions {
     return object : MenuSheetActions {
         override fun onHomeClick() {
