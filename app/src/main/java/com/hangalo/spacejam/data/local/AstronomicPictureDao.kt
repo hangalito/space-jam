@@ -26,7 +26,7 @@ interface AstronomicPictureDao {
      * Fetches a picture from the database by the given date
      */
     @Query("SELECT * FROM astronomic_picture WHERE date = :date")
-    suspend fun getByDate(date: String): Flow<AstronomicPicture?>
+    fun getByDate(date: String): Flow<AstronomicPicture>
 
     /**
      * Insert a picture into the database
