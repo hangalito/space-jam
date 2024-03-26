@@ -8,14 +8,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hangalo.spacejam.R
 import com.hangalo.spacejam.data.remote.apod.APODRepository
-import com.hangalo.spacejam.ui.screens.UiState
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
 
 class HomeViewModel(private val apodRepository: APODRepository) : ViewModel() {
-    var uiState: UiState by mutableStateOf(UiState.Loading)
+    var homeUiState: HomeUiState by mutableStateOf(HomeUiState.Loading)
         private set
 
     var retry: () -> Unit = {}
@@ -27,70 +26,70 @@ class HomeViewModel(private val apodRepository: APODRepository) : ViewModel() {
 
     fun getTodayPicture() {
         retry = { getTodayPicture() }
-        uiState = UiState.Loading
+        homeUiState = HomeUiState.Loading
         viewModelScope.launch {
-            uiState = try {
-                UiState.Success(apodRepository.getTodayPicture())
+            homeUiState = try {
+                HomeUiState.Success(apodRepository.getTodayPicture())
             } catch (ex: HttpException) {
                 Log.d("HttpException", ex.localizedMessage as String)
-                UiState.Error.Error
+                HomeUiState.Error
             } catch (ex: IOException) {
                 Log.d("IOException", ex.localizedMessage as String)
-                UiState.Error.Error
+                HomeUiState.Error
             }
         }
     }
 
     fun getYesterdayPicture() {
         retry = { getYesterdayPicture() }
-        uiState = UiState.Loading
+        homeUiState = HomeUiState.Loading
         viewModelScope.launch {
-            uiState = try {
-                UiState.Success(apodRepository.getYesterdayPicture())
+            homeUiState = try {
+                HomeUiState.Success(apodRepository.getYesterdayPicture())
             } catch (ex: HttpException) {
                 Log.d("HttpException", ex.localizedMessage as String)
-                UiState.Error.Error
+                HomeUiState.Error
             } catch (ex: IOException) {
                 Log.d("IOException", ex.localizedMessage as String)
-                UiState.Error.Error
+                HomeUiState.Error
             }
         }
     }
 
     fun get2daysAgoPicture() {
         retry = { get2daysAgoPicture() }
-        uiState = UiState.Loading
+        homeUiState = HomeUiState.Loading
         viewModelScope.launch {
-            uiState = try {
-                UiState.Success(apodRepository.get2daysAgoPicture())
+            homeUiState = try {
+                HomeUiState.Success(apodRepository.get2daysAgoPicture())
             } catch (ex: HttpException) {
                 Log.d("HttpException", ex.localizedMessage as String)
-                UiState.Error.Error
+                HomeUiState.Error
             } catch (ex: IOException) {
                 Log.d("IOException", ex.localizedMessage as String)
-                UiState.Error.Error
+                HomeUiState.Error
             }
         }
     }
 
     fun getPictureByDate(dateMillis: Long) {
         retry = { getPictureByDate(dateMillis) }
-        uiState = UiState.Loading
+        homeUiState = HomeUiState.Loading
         viewModelScope.launch {
-            uiState = try {
-                UiState.Success(apodRepository.getPictureByDate(dateMillis))
+            homeUiState = try {
+                HomeUiState.Success(apodRepository.getPictureByDate(dateMillis))
             } catch (ex: HttpException) {
-                var err: UiState = UiState.Error.Error
+                var err: HomeUiState = HomeUiState.Error
                 val code = ex.code()
                 Log.d("HttpException", ex.localizedMessage as String)
                 if (code == 400) {
                     err =
-                        UiState.Error.InvalidDate(R.string.invalid_date)
+                        HomeUiState.InvalidDate(R.string.invalid_date)
                 }
                 err
             } catch (ex: IOException) {
                 Log.d("IOException", ex.localizedMessage as String)
-                UiState.Error.Error
+                HomeUiState.Error
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.hangalo.spacejam
+package com.hangalo.spacejam.domain
 
 import android.app.Application
 import com.hangalo.spacejam.data.AppContainer
