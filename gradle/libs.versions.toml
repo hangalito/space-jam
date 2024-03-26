@@ -14,7 +14,7 @@ coilVersion = "2.5.0"
 kotlinSerializationVersion = "1.6.0"
 serialization = "1.9.10"
 lifecycleViewmodelCompose = "2.7.0"
-roomVersion = "2.5.2"
+roomVersion = "2.6.1"
 lifecycleVersion = "2.7.0"
 
 [libraries]

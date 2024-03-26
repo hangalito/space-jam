@@ -94,7 +94,7 @@ dependencies {
     // Room library
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    // ksp(libs.room.compiler)
+     ksp(libs.room.compiler)
 
     // Testing
     testImplementation(libs.junit)
