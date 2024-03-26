@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 data class AstronomicPicture(
     val date: String,
     val explanation: String,
-    @ColumnInfo("hdurl") @SerialName("hdurl") val hdUrl: String,
+    @ColumnInfo("hdurl") @SerialName("hdurl") val hdUrl: String = "",
     @ColumnInfo("media_type") @SerialName("media_type") val mediaType: String,
     @ColumnInfo("service_version") @SerialName("service_version") val serviceName: String,
     val title: String,
