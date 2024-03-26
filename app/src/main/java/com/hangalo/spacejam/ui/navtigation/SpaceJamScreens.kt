@@ -1,4 +1,4 @@
-package com.hangalo.spacejam.ui.screens.navtigation
+package com.hangalo.spacejam.ui.navtigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

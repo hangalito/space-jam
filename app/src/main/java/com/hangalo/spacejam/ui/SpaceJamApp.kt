@@ -2,7 +2,7 @@ package com.hangalo.spacejam.ui
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
-import com.hangalo.spacejam.ui.screens.navtigation.SpaceJamScreens
+import com.hangalo.spacejam.ui.navtigation.SpaceJamScreens
 
 
 @Composable
