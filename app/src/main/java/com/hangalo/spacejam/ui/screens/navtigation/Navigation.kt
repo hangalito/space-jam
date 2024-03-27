@@ -1,4 +1,4 @@
-package com.hangalo.spacejam.ui.navtigation
+package com.hangalo.spacejam.ui.screens.navtigation
 
 import androidx.annotation.StringRes
 

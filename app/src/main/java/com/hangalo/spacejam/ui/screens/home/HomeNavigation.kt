@@ -1,7 +1,7 @@
 package com.hangalo.spacejam.ui.screens.home
 
 import com.hangalo.spacejam.R
-import com.hangalo.spacejam.ui.navtigation.Navigation
+import com.hangalo.spacejam.ui.screens.navtigation.Navigation
 
 
 object HomeNavigation : Navigation {
