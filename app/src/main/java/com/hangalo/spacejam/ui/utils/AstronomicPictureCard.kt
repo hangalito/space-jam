@@ -81,9 +81,9 @@ fun AstronomicPictureCard(
                     style = typography.labelLarge,
                     modifier = Modifier
                 )
-                astronomicPicture.copyright.takeIf { it.isNotEmpty() }.let {
+                if(astronomicPicture.copyright.isNotEmpty()) {
                     Text(
-                        text = "©\uFE0F ${it?.strip()}",
+                        text = "©\uFE0F ${astronomicPicture.copyright.strip()}",
                         style = typography.labelSmall,
                         modifier = Modifier.alpha(.75f)
                     )
@@ -93,7 +93,7 @@ fun AstronomicPictureCard(
         AsyncImage(
             contentDescription = astronomicPicture.title,
             model = ImageRequest.Builder(LocalContext.current).data(astronomicPicture.url)
-                .crossfade(true).crossfade(1200).build(),
+                .crossfade(true).crossfade(150).build(),
             error = painterResource(id = R.drawable.ic_broken_img),
             placeholder = painterResource(id = R.drawable.ic_img_placeholder),
             contentScale = ContentScale.Crop,
