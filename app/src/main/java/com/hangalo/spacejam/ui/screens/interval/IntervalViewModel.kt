@@ -16,10 +16,10 @@ import java.sql.Date
 class IntervalViewModel(private val repository: APODRepository) : ViewModel() {
 
     var uiState: IntervalUiState by mutableStateOf(IntervalUiState.Loading)
-    var retryAction: () -> Unit = {}
+    var retry: () -> Unit = {}
 
     fun getPicturesFromDate(dateMillis: Long) {
-        retryAction = { getPicturesFromDate(dateMillis) }
+        retry = { getPicturesFromDate(dateMillis) }
         uiState = IntervalUiState.Loading
         viewModelScope.launch {
             uiState = try {
@@ -35,8 +35,8 @@ class IntervalViewModel(private val repository: APODRepository) : ViewModel() {
         }
     }
 
-    fun getPictureInInterval(statDate: Long, endDate: Long) {
-        retryAction = { getPictureInInterval(statDate, endDate) }
+    fun getPictureInInterval(startDate: Long, endDate: Long) {
+        retry = { getPictureInInterval(startDate, endDate) }
         uiState = IntervalUiState.Loading
         // TODO: write code to get data in specified interval
     }

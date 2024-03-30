@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hangalo.spacejam.ui.screens.home.HomeNavigation
 import com.hangalo.spacejam.ui.screens.home.SpaceJamHome
+import com.hangalo.spacejam.ui.screens.interval.IntervalNavigation
+import com.hangalo.spacejam.ui.screens.interval.SpaceJamPictureListApp
 
 
 @Composable
@@ -15,7 +17,10 @@ fun SpaceJamScreens(
 ) {
     NavHost(navController = navController, startDestination = HomeNavigation.route) {
         composable(HomeNavigation.route) {
-            SpaceJamHome()
+            SpaceJamHome(navController)
+        }
+        composable(IntervalNavigation.route) {
+            SpaceJamPictureListApp(navController)
         }
     }
 }
