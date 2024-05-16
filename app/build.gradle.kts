@@ -14,7 +14,7 @@ android {
         minSdk = 29
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.2.0"
 
         buildConfigField(
             type = "String",
@@ -94,7 +94,7 @@ dependencies {
     // Room library
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-     ksp(libs.room.compiler)
+    ksp(libs.room.compiler)
 
     // Testing
     testImplementation(libs.junit)
