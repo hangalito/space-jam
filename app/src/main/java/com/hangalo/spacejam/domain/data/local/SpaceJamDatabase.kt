@@ -1,10 +1,10 @@
-package com.hangalo.spacejam.data.local
+package com.hangalo.spacejam.domain.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.hangalo.spacejam.model.AstronomicPicture
+import com.hangalo.spacejam.domain.AstronomicPicture
 
 
 @Database(entities = [AstronomicPicture::class], version = 2, exportSchema = false)

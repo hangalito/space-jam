@@ -5,40 +5,49 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hangalo.spacejam.data.remote.apod.APODRepository
+import com.hangalo.spacejam.domain.data.remote.apod.APODRepository
+import com.hangalo.spacejam.ui.screens.interval.IntervalUiState.DefaultError
+import com.hangalo.spacejam.ui.screens.interval.IntervalUiState.Loading
+import com.hangalo.spacejam.ui.screens.interval.IntervalUiState.Success
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
-import java.sql.Date
 import android.util.Log.d as debug
 
 
 class IntervalViewModel(private val repository: APODRepository) : ViewModel() {
 
-    var uiState: IntervalUiState by mutableStateOf(IntervalUiState.Loading)
+    var uiState: IntervalUiState by mutableStateOf(Loading)
     var retry: () -> Unit = {}
 
-    fun getPicturesFromDate(dateMillis: Long) {
-        retry = { getPicturesFromDate(dateMillis) }
-        uiState = IntervalUiState.Loading
+    /**
+     * Start fetching pictures in the selected interval.
+     */
+    fun getPictureInInterval(startDate: Long, endDate: Long) {
+        retry = { getPictureInInterval(startDate, endDate) }
+        uiState = Loading
         viewModelScope.launch {
             uiState = try {
-                val date = Date(dateMillis).toString()
-                IntervalUiState.Success(repository.getPicturesFrom(date))
+                Success(repository.getPicturesWithinInterval(startDate, endDate))
             } catch (exception: HttpException) {
-                debug("HttpException", exception.localizedMessage as String)
-                IntervalUiState.DefaultError
+                debugException(exception)
+                DefaultError
             } catch (exception: IOException) {
-                debug("IOException", exception.localizedMessage as String)
-                IntervalUiState.DefaultError
+                debugException(exception)
+                DefaultError
             }
         }
     }
 
-    fun getPictureInInterval(startDate: Long, endDate: Long) {
-        retry = { getPictureInInterval(startDate, endDate) }
-        uiState = IntervalUiState.Loading
-        // TODO: write code to get data in specified interval
+    private fun debugException(exception: Throwable) {
+        val tag = exception::class.java.name
+        var msg = exception.localizedMessage as String
+        var code = ""
+        if (exception is HttpException) {
+            code = exception.response()?.message() ?: "0"
+            msg = exception.message()
+        }
+        debug(tag, "$code - $msg")
     }
 
 }

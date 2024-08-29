@@ -1,10 +1,10 @@
-package com.hangalo.spacejam.data.local
+package com.hangalo.spacejam.domain.data.local
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.hangalo.spacejam.model.AstronomicPicture
+import com.hangalo.spacejam.domain.AstronomicPicture
 import kotlinx.coroutines.flow.Flow
 
 
@@ -19,13 +19,13 @@ interface AstronomicPictureDao {
     /**
      * Fetches all the pictures from the database
      */
-    @Query("SELECT * FROM astronomic_picture ORDER BY date DESC")
+    @Query("SELECT * FROM astronomic_pictures ORDER BY date DESC")
     fun getAll(): Flow<List<AstronomicPicture>>
 
     /**
      * Fetches a picture from the database by the given date
      */
-    @Query("SELECT * FROM astronomic_picture WHERE date = :date")
+    @Query("SELECT * FROM astronomic_pictures WHERE date = :date")
     fun getByDate(date: String): Flow<AstronomicPicture>
 
     /**

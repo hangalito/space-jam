@@ -31,7 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.hangalo.spacejam.R
-import com.hangalo.spacejam.domain.ViewModelProvider.Factory
+import com.hangalo.spacejam.domain.container.ViewModelProvider.Factory
 import com.hangalo.spacejam.ui.util.MenuSheet
 import com.hangalo.spacejam.ui.util.MenuSheetActions
 import com.hangalo.spacejam.ui.util.SpaceJamTopBar

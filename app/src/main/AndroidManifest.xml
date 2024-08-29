@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".domain.SpaceJamApplication"
+        android:name=".domain.container.SpaceJamApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -24,10 +24,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" />
+                <data android:host="api.nasa.gov" />
+                <data android:pathAdvancedPattern="/planetary/.+" />
+            </intent-filter>
         </activity>
-        <meta-data
-            android:name="com.hangalo.spacejam.NASA_API_KEY"
-            android:value="Zajwim2b5dPXjTmkZGcpACU8LLbXcdr5RKmgfbDJ" />
     </application>
 
 </manifest>

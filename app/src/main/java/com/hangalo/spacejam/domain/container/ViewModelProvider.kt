@@ -1,4 +1,4 @@
-package com.hangalo.spacejam.domain
+package com.hangalo.spacejam.domain.container
 
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras

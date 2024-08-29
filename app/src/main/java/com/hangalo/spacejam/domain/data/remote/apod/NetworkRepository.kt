@@ -1,10 +1,13 @@
-package com.hangalo.spacejam.data.remote.apod
+package com.hangalo.spacejam.domain.data.remote.apod
 
-import com.hangalo.spacejam.model.AstronomicPicture
-import com.hangalo.spacejam.network.ApiService
+import com.hangalo.spacejam.domain.AstronomicPicture
+import com.hangalo.spacejam.domain.network.ApiService
 import java.sql.Date
 
 
+/**
+ * [APODRepository] implementation.
+ */
 data class NetworkRepository(private val apiService: ApiService) : APODRepository {
     override suspend fun getTodayPicture(): AstronomicPicture {
         return apiService.getTodayPicture()
@@ -16,7 +19,7 @@ data class NetworkRepository(private val apiService: ApiService) : APODRepositor
         return apiService.getPictureByDate(date)
     }
 
-    override suspend fun get2daysAgoPicture(): AstronomicPicture {
+    suspend fun get2daysAgoPicture(): AstronomicPicture {
         val today = Date(System.currentTimeMillis()).toString().split("-")
         val date = "${today.first()}-${today[1]}-${today.last().toInt() - 2}"
         return apiService.getPictureByDate(date)
@@ -27,7 +30,17 @@ data class NetworkRepository(private val apiService: ApiService) : APODRepositor
         return apiService.getPictureByDate(date)
     }
 
-    override suspend fun getPicturesFrom(starDate: String): List<AstronomicPicture> {
-        return apiService.getPicturesFrom(starDate)
+    override suspend fun getPicturesFrom(starDate: Long): List<AstronomicPicture> {
+        val date = Date(starDate).toString()
+        return apiService.getPicturesFrom(date)
+    }
+
+    override suspend fun getPicturesWithinInterval(
+        startDate: Long,
+        endDate: Long
+    ): List<AstronomicPicture> {
+        val startDateString = Date(startDate).toString()
+        val endDateString = Date(endDate).toString()
+        return apiService.getPicturesInInterval(startDateString, endDateString)
     }
 }

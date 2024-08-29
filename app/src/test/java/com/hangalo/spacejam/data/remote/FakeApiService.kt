@@ -1,8 +1,8 @@
 package com.hangalo.spacejam.data.remote
 
 import com.hangalo.spacejam.data.FakeDatasource
-import com.hangalo.spacejam.model.AstronomicPicture
-import com.hangalo.spacejam.network.ApiService
+import com.hangalo.spacejam.domain.AstronomicPicture
+import com.hangalo.spacejam.domain.network.ApiService
 import java.sql.Date
 
 
@@ -26,5 +26,12 @@ class FakeApiService : ApiService {
         }
 
         return res
+    }
+
+    override suspend fun getPicturesInInterval(
+        startDate: String,
+        endDate: String
+    ): List<AstronomicPicture> {
+        TODO("Not yet implemented")
     }
 }

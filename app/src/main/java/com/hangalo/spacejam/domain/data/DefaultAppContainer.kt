@@ -1,12 +1,13 @@
-package com.hangalo.spacejam.data
+package com.hangalo.spacejam.domain.data
 
 import android.content.Context
-import com.hangalo.spacejam.data.local.OfflineSavedRepository
-import com.hangalo.spacejam.data.local.SavedRepository
-import com.hangalo.spacejam.data.local.SpaceJamDatabase
-import com.hangalo.spacejam.data.remote.apod.APODRepository
-import com.hangalo.spacejam.data.remote.apod.NetworkRepository
-import com.hangalo.spacejam.network.ApiService
+import com.hangalo.spacejam.domain.container.AppContainer
+import com.hangalo.spacejam.domain.data.local.OfflineSavedRepository
+import com.hangalo.spacejam.domain.data.local.SavedRepository
+import com.hangalo.spacejam.domain.data.local.SpaceJamDatabase
+import com.hangalo.spacejam.domain.data.remote.apod.APODRepository
+import com.hangalo.spacejam.domain.data.remote.apod.NetworkRepository
+import com.hangalo.spacejam.domain.network.ApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -18,6 +19,9 @@ import retrofit2.Retrofit
  */
 class DefaultAppContainer(private val context: Context) : AppContainer {
 
+    /**
+     * API end-point.
+     */
     private val baseUrl: String = "https://api.nasa.gov/planetary/"
 
     private val retrofit: Retrofit = Retrofit.Builder()

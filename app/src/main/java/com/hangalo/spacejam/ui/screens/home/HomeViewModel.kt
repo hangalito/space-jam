@@ -7,7 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hangalo.spacejam.R
-import com.hangalo.spacejam.data.remote.apod.APODRepository
+import com.hangalo.spacejam.domain.data.remote.apod.APODRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -46,22 +46,6 @@ class HomeViewModel(private val apodRepository: APODRepository) : ViewModel() {
         viewModelScope.launch {
             homeUiState = try {
                 HomeUiState.Success(apodRepository.getYesterdayPicture())
-            } catch (ex: HttpException) {
-                Log.d("HttpException", ex.localizedMessage as String)
-                HomeUiState.Error
-            } catch (ex: IOException) {
-                Log.d("IOException", ex.localizedMessage as String)
-                HomeUiState.Error
-            }
-        }
-    }
-
-    fun get2daysAgoPicture() {
-        retry = { get2daysAgoPicture() }
-        homeUiState = HomeUiState.Loading
-        viewModelScope.launch {
-            homeUiState = try {
-                HomeUiState.Success(apodRepository.get2daysAgoPicture())
             } catch (ex: HttpException) {
                 Log.d("HttpException", ex.localizedMessage as String)
                 HomeUiState.Error

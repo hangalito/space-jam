@@ -1,7 +1,8 @@
 package com.hangalo.spacejam.data.local
 
 import com.hangalo.spacejam.data.FakeDatasource
-import com.hangalo.spacejam.model.AstronomicPicture
+import com.hangalo.spacejam.domain.AstronomicPicture
+import com.hangalo.spacejam.domain.data.local.AstronomicPictureDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import java.sql.Date

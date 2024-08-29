@@ -1,6 +1,6 @@
 package com.hangalo.spacejam.data
 
-import com.hangalo.spacejam.model.AstronomicPicture
+import com.hangalo.spacejam.domain.AstronomicPicture
 import java.sql.Date
 
 

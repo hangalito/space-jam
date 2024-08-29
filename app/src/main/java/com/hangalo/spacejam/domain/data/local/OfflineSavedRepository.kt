@@ -1,6 +1,6 @@
-package com.hangalo.spacejam.data.local
+package com.hangalo.spacejam.domain.data.local
 
-import com.hangalo.spacejam.model.AstronomicPicture
+import com.hangalo.spacejam.domain.AstronomicPicture
 import kotlinx.coroutines.flow.Flow
 
 

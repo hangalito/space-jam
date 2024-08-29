@@ -8,14 +8,14 @@ import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDefaults.YearAbbrMonthDaySkeleton
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DateRangePicker
-import androidx.compose.material3.DisplayMode
-import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.DisplayMode.Companion.Input
+import androidx.compose.material3.DrawerValue.Closed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarDefaults.enterAlwaysScrollBehavior
 import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -30,9 +30,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.hangalo.spacejam.R
-import com.hangalo.spacejam.domain.ViewModelProvider.Factory
+import com.hangalo.spacejam.domain.container.ViewModelProvider.Factory
 import com.hangalo.spacejam.ui.util.MenuSheet
-import com.hangalo.spacejam.ui.util.MenuSheetActions
+import com.hangalo.spacejam.ui.util.MenuSheetActions.Companion.defaultActions
 import java.lang.System.currentTimeMillis
 
 
@@ -41,32 +41,31 @@ import java.lang.System.currentTimeMillis
 fun SpaceJamPictureListApp(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    viewModel: IntervalViewModel = viewModel(factory = Factory),
+    vm: IntervalViewModel = viewModel(factory = Factory),
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val coroutineScope = rememberCoroutineScope()
-    val dateRangePickerState = rememberDateRangePickerState(
+    val scrollBehavior = enterAlwaysScrollBehavior()
+    val drawerState = rememberDrawerState(initialValue = Closed)
+    val datePickerState = rememberDateRangePickerState(
         initialSelectedStartDateMillis = currentTimeMillis(),
         initialSelectedEndDateMillis = currentTimeMillis(),
-        initialDisplayMode = DisplayMode.Input
+        initialDisplayMode = Input
     )
-    var isDialogVisible by remember { mutableStateOf(true) }
+    var showingDialog by remember { mutableStateOf(true) }
 
     ModalNavigationDrawer(drawerContent = {
         MenuSheet(
-            actions = MenuSheetActions.defaultActions(
-                viewModel,
-                drawerState,
-                coroutineScope,
-                navController,
+            actions = defaultActions(
+                viewModel = vm,
+                drawerState = drawerState,
+                coroutineScope = rememberCoroutineScope(),
+                navController = navController,
             ) {},
         )
     }) {
         Scaffold { innerPadding ->
             IntervalScreen(
-                uiState = viewModel.uiState,
-                retryAction = viewModel.retry,
+                uiState = vm.uiState,
+                retryAction = vm.retry,
                 modifier = modifier
                     .fillMaxSize()
                     .padding(innerPadding)
@@ -77,33 +76,31 @@ fun SpaceJamPictureListApp(
     }
 
     when {
-        isDialogVisible -> {
+        showingDialog -> {
             DatePickerDialog(
-                onDismissRequest = { isDialogVisible = false },
+                onDismissRequest = { showingDialog = false },
                 confirmButton = {
                     TextButton(onClick = {
-                        viewModel.getPictureInInterval(
-                            dateRangePickerState.selectedStartDateMillis
-                                ?: currentTimeMillis(),
-                            dateRangePickerState.selectedEndDateMillis ?: currentTimeMillis()
+                        vm.getPictureInInterval(
+                            datePickerState.selectedStartDateMillis ?: currentTimeMillis(),
+                            datePickerState.selectedEndDateMillis ?: currentTimeMillis()
                         )
-                        isDialogVisible = false
+                        showingDialog = false
                     }) {
                         Text(stringResource(id = R.string.ok))
                     }
                 },
                 dismissButton = {
-                    TextButton(onClick = { isDialogVisible = false }) {
+                    TextButton(onClick = { showingDialog = false }) {
                         Text(stringResource(id = R.string.cancel))
                     }
                 },
             ) {
                 DateRangePicker(
-                    state = dateRangePickerState,
+                    state = datePickerState,
                     dateFormatter = DatePickerDefaults.dateFormatter(selectedDateDescriptionSkeleton = YearAbbrMonthDaySkeleton)
                 )
             }
         }
     }
-
 }

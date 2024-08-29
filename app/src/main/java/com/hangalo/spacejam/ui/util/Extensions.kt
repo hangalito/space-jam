@@ -6,12 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import com.hangalo.spacejam.R
-import com.hangalo.spacejam.model.AstronomicPicture
+import com.hangalo.spacejam.domain.AstronomicPicture
 import java.time.LocalDate
 
 
 /**
- * Get the [String] value for [AstronomicPicture]. <br>
+ * Get the [String] value for [AstronomicPicture].
  * @return "Today", "Yesterday", or the actual date.
  */
 @Composable

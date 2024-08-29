@@ -1,7 +1,7 @@
 package com.hangalo.spacejam.ui.screens.interval
 
 import androidx.annotation.StringRes
-import com.hangalo.spacejam.model.AstronomicPicture
+import com.hangalo.spacejam.domain.AstronomicPicture
 import com.hangalo.spacejam.ui.screens.DefaultUiState
 
 

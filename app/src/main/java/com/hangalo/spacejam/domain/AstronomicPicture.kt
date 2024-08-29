@@ -1,4 +1,4 @@
-package com.hangalo.spacejam.model
+package com.hangalo.spacejam.domain
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -7,7 +7,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 
-@Entity("astronomic_picture")
+@Entity("astronomic_pictures")
 @Serializable
 data class AstronomicPicture(
     @PrimaryKey val date: String,

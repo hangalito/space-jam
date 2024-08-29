@@ -2,7 +2,7 @@ package com.hangalo.spacejam
 
 import com.hangalo.spacejam.data.FakeDatasource
 import com.hangalo.spacejam.data.remote.FakeApiService
-import com.hangalo.spacejam.data.remote.apod.NetworkRepository
+import com.hangalo.spacejam.domain.data.remote.apod.NetworkRepository
 import com.hangalo.spacejam.rules.TestDispatcherRule
 import com.hangalo.spacejam.ui.screens.home.HomeUiState
 import com.hangalo.spacejam.ui.screens.home.HomeViewModel
