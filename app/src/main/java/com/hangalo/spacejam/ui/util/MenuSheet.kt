@@ -1,4 +1,4 @@
-package com.hangalo.spacejam.ui.utils
+package com.hangalo.spacejam.ui.util
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -51,17 +51,6 @@ fun MenuSheet(
                     painter = painterResource(id = R.drawable.ic_yesterday),
                     contentDescription = stringResource(id = R.string.menu_yesterday),
                     modifier = Modifier.size(Icons.defaultIconSize())
-                )
-            }
-        )
-        NavigationDrawerItem(
-            label = { Text(stringResource(id = R.string.menu_two_days_ago)) },
-            selected = false,
-            onClick = actions::on2daysClick,
-            icon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_two_days_ago),
-                    contentDescription = stringResource(id = R.string.menu_two_days_ago)
                 )
             }
         )
@@ -131,8 +120,6 @@ private fun MenuSheetPreview() {
         override fun onHomeClick() {}
 
         override fun onYesterdayClick() {}
-
-        override fun on2daysClick() {}
 
         override fun onSelectDateClick() {}
 

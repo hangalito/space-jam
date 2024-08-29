@@ -31,9 +31,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.hangalo.spacejam.R
 import com.hangalo.spacejam.domain.ViewModelProvider.Factory
-import com.hangalo.spacejam.ui.utils.MenuSheet
-import com.hangalo.spacejam.ui.utils.MenuSheetActions
-import com.hangalo.spacejam.ui.utils.defaultActions
+import com.hangalo.spacejam.ui.util.MenuSheet
+import com.hangalo.spacejam.ui.util.MenuSheetActions
+import java.lang.System.currentTimeMillis
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,8 +47,8 @@ fun SpaceJamPictureListApp(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val dateRangePickerState = rememberDateRangePickerState(
-        initialSelectedStartDateMillis = System.currentTimeMillis(),
-        initialSelectedEndDateMillis = System.currentTimeMillis(),
+        initialSelectedStartDateMillis = currentTimeMillis(),
+        initialSelectedEndDateMillis = currentTimeMillis(),
         initialDisplayMode = DisplayMode.Input
     )
     var isDialogVisible by remember { mutableStateOf(true) }
@@ -84,8 +84,8 @@ fun SpaceJamPictureListApp(
                     TextButton(onClick = {
                         viewModel.getPictureInInterval(
                             dateRangePickerState.selectedStartDateMillis
-                                ?: System.currentTimeMillis(),
-                            dateRangePickerState.selectedEndDateMillis ?: System.currentTimeMillis()
+                                ?: currentTimeMillis(),
+                            dateRangePickerState.selectedEndDateMillis ?: currentTimeMillis()
                         )
                         isDialogVisible = false
                     }) {

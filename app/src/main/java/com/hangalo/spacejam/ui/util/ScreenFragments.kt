@@ -1,4 +1,4 @@
-package com.hangalo.spacejam.ui.utils
+package com.hangalo.spacejam.ui.util
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +23,9 @@ import com.hangalo.spacejam.ui.screens.DefaultUiState
 import com.hangalo.spacejam.ui.screens.home.HomeUiState
 import com.hangalo.spacejam.ui.screens.interval.IntervalUiState
 
+/**
+ * The home screen displaying the loading message.
+ */
 @Composable
 fun LoadingScreen(
     modifier: Modifier = Modifier,
@@ -35,6 +38,9 @@ fun LoadingScreen(
     }
 }
 
+/**
+ * The home screen displaying error message and button to retry.
+ */
 @Composable
 fun ErrorScreen(
     state: DefaultUiState.Error,

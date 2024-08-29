@@ -1,6 +1,5 @@
 package com.hangalo.spacejam.ui.screens.interval
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,6 +10,7 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 import java.sql.Date
+import android.util.Log.d as debug
 
 
 class IntervalViewModel(private val repository: APODRepository) : ViewModel() {
@@ -25,11 +25,11 @@ class IntervalViewModel(private val repository: APODRepository) : ViewModel() {
             uiState = try {
                 val date = Date(dateMillis).toString()
                 IntervalUiState.Success(repository.getPicturesFrom(date))
-            } catch (e: HttpException) {
-                Log.d("HttpException", e.localizedMessage as String)
+            } catch (exception: HttpException) {
+                debug("HttpException", exception.localizedMessage as String)
                 IntervalUiState.DefaultError
-            } catch (e: IOException) {
-                Log.d("IOException", e.localizedMessage as String)
+            } catch (exception: IOException) {
+                debug("IOException", exception.localizedMessage as String)
                 IntervalUiState.DefaultError
             }
         }

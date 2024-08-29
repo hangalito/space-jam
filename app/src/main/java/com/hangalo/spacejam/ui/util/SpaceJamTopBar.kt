@@ -1,4 +1,4 @@
-package com.hangalo.spacejam.ui.utils
+package com.hangalo.spacejam.ui.util
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.Menu
@@ -12,6 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.hangalo.spacejam.R
 
+/**
+ * TopAppBar for Home screen.
+ */
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun SpaceJamTopBar(

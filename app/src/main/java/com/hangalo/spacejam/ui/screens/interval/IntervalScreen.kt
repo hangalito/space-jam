@@ -7,9 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.hangalo.spacejam.model.AstronomicPicture
-import com.hangalo.spacejam.ui.utils.AstronomicPictureChip
-import com.hangalo.spacejam.ui.utils.ErrorScreen
-import com.hangalo.spacejam.ui.utils.LoadingScreen
+import com.hangalo.spacejam.ui.util.AstronomicPictureChip
+import com.hangalo.spacejam.ui.util.ErrorScreen
+import com.hangalo.spacejam.ui.util.LoadingScreen
 
 
 @Composable

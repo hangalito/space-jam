@@ -1,4 +1,4 @@
-package com.hangalo.spacejam.ui.screens.navtigation
+package com.hangalo.spacejam.ui.screens
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -11,6 +11,9 @@ import com.hangalo.spacejam.ui.screens.interval.IntervalNavigation
 import com.hangalo.spacejam.ui.screens.interval.SpaceJamPictureListApp
 
 
+/**
+ * Composable for the main screens of the app.
+ */
 @Composable
 fun SpaceJamScreens(
     navController: NavHostController = rememberNavController(),

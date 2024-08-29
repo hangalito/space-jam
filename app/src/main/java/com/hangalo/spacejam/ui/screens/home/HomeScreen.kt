@@ -3,9 +3,9 @@ package com.hangalo.spacejam.ui.screens.home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.hangalo.spacejam.model.AstronomicPicture
-import com.hangalo.spacejam.ui.utils.AstronomicPictureCard
-import com.hangalo.spacejam.ui.utils.ErrorScreen
-import com.hangalo.spacejam.ui.utils.LoadingScreen
+import com.hangalo.spacejam.ui.util.AstronomicPictureCard
+import com.hangalo.spacejam.ui.util.ErrorScreen
+import com.hangalo.spacejam.ui.util.LoadingScreen
 
 @Composable
 fun HomeScreen(

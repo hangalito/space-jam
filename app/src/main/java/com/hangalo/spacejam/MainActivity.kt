@@ -10,6 +10,9 @@ import androidx.compose.ui.Modifier
 import com.hangalo.spacejam.ui.SpaceJamApp
 import com.hangalo.spacejam.ui.theme.SpaceJamTheme
 
+/**
+ * Main activity for the app.
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

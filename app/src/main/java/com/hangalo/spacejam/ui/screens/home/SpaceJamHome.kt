@@ -14,7 +14,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -32,13 +32,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.hangalo.spacejam.R
 import com.hangalo.spacejam.domain.ViewModelProvider.Factory
-import com.hangalo.spacejam.ui.utils.MenuSheet
-import com.hangalo.spacejam.ui.utils.MenuSheetActions
-import com.hangalo.spacejam.ui.utils.SpaceJamTopBar
-import com.hangalo.spacejam.ui.utils.defaultActions
+import com.hangalo.spacejam.ui.util.MenuSheet
+import com.hangalo.spacejam.ui.util.MenuSheetActions
+import com.hangalo.spacejam.ui.util.SpaceJamTopBar
 import kotlinx.coroutines.launch
+import java.lang.System.currentTimeMillis
 
 
+/**
+ * The main composable for the app home screen.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SpaceJamHome(
@@ -46,11 +49,10 @@ fun SpaceJamHome(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = Factory),
 ) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val coroutineScope = rememberCoroutineScope()
-    val datePickerState =
-        rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scrollBehavior = exitUntilCollapsedScrollBehavior()
+    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = currentTimeMillis())
 
     var isVisible: Boolean by remember { mutableStateOf(false) }
 
@@ -58,13 +60,12 @@ fun SpaceJamHome(
         drawerContent = {
             MenuSheet(
                 actions = MenuSheetActions.defaultActions(
-                    viewModel,
-                    drawerState,
-                    coroutineScope,
-                    navController
-                ) {
-                    isVisible = true
-                },
+                    viewModel = viewModel,
+                    drawerState = drawerState,
+                    coroutineScope = coroutineScope,
+                    navController = navController,
+                    changeVisibility = { isVisible = true }
+                ),
                 modifier = modifier
                     .fillMaxHeight()
                     .verticalScroll(rememberScrollState())

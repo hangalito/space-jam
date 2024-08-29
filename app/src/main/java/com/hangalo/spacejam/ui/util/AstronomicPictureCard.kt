@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.hangalo.spacejam.ui.utils
+package com.hangalo.spacejam.ui.util
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -81,7 +81,7 @@ fun AstronomicPictureCard(
                     style = typography.labelLarge,
                     modifier = Modifier
                 )
-                if(astronomicPicture.copyright.isNotEmpty()) {
+                if (astronomicPicture.copyright.isNotEmpty()) {
                     Text(
                         text = "©\uFE0F ${astronomicPicture.copyright.strip()}",
                         style = typography.labelSmall,
