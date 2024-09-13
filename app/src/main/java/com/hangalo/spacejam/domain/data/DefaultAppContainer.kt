@@ -33,7 +33,7 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     /**
      * Implementation for [APODRepository]
      */
-    override val repository: APODRepository by lazy {
+    override val networkRepository: APODRepository by lazy {
         NetworkRepository(retrofitService)
     }
 

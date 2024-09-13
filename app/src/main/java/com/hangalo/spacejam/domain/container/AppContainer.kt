@@ -5,6 +5,6 @@ import com.hangalo.spacejam.domain.data.remote.apod.APODRepository
 
 
 interface AppContainer {
-    val repository: APODRepository
+    val networkRepository: APODRepository
     val savedRepository: SavedRepository
 }

@@ -1,79 +1,43 @@
 package com.hangalo.spacejam.ui.screens.home
 
-import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hangalo.spacejam.R
+import coil.network.HttpException
 import com.hangalo.spacejam.domain.data.remote.apod.APODRepository
+import com.hangalo.spacejam.ui.screens.UiState
+import com.hangalo.spacejam.ui.screens.UiState.Success
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 import java.io.IOException
 
-
-class HomeViewModel(private val apodRepository: APODRepository) : ViewModel() {
-    var homeUiState: HomeUiState by mutableStateOf(HomeUiState.Loading)
-        private set
-
-    var retry: () -> Unit = {}
+class HomeViewModel(private val networkRepository: APODRepository) : ViewModel() {
+    private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
+    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
+    var retry: () -> Unit = this::getPicture
 
     init {
-        getTodayPicture()
-    }
-
-
-    fun getTodayPicture() {
-        retry = { getTodayPicture() }
-        homeUiState = HomeUiState.Loading
         viewModelScope.launch {
-            homeUiState = try {
-                HomeUiState.Success(apodRepository.getTodayPicture())
-            } catch (ex: HttpException) {
-                Log.d("HttpException", ex.localizedMessage as String)
-                HomeUiState.Error
-            } catch (ex: IOException) {
-                Log.d("IOException", ex.localizedMessage as String)
-                HomeUiState.Error
+            try {
+                _uiState.emit(Success(networkRepository.getTodayPicture()))
+            } catch (error: HttpException) {
+                _uiState.emit(UiState.Error(error.response.message))
+            } catch (error: IOException) {
+                _uiState.emit(UiState.Error(error.localizedMessage.orEmpty()))
             }
         }
     }
 
-    fun getYesterdayPicture() {
-        retry = { getYesterdayPicture() }
-        homeUiState = HomeUiState.Loading
+    fun getPicture() {
         viewModelScope.launch {
-            homeUiState = try {
-                HomeUiState.Success(apodRepository.getYesterdayPicture())
-            } catch (ex: HttpException) {
-                Log.d("HttpException", ex.localizedMessage as String)
-                HomeUiState.Error
-            } catch (ex: IOException) {
-                Log.d("IOException", ex.localizedMessage as String)
-                HomeUiState.Error
-            }
-        }
-    }
-
-    fun getPictureByDate(dateMillis: Long) {
-        retry = { getPictureByDate(dateMillis) }
-        homeUiState = HomeUiState.Loading
-        viewModelScope.launch {
-            homeUiState = try {
-                HomeUiState.Success(apodRepository.getPictureByDate(dateMillis))
-            } catch (ex: HttpException) {
-                var err: HomeUiState = HomeUiState.Error
-                val code = ex.code()
-                Log.d("HttpException", ex.localizedMessage as String)
-                if (code == 400) {
-                    err =
-                        HomeUiState.InvalidDate(R.string.invalid_date)
-                }
-                err
-            } catch (ex: IOException) {
-                Log.d("IOException", ex.localizedMessage as String)
-                HomeUiState.Error
+            _uiState.emit(UiState.Loading)
+            try {
+                _uiState.emit(Success(networkRepository.getTodayPicture()))
+            } catch (error: HttpException) {
+                _uiState.emit(UiState.Error(error.response.message))
+            } catch (error: IOException) {
+                _uiState.emit(UiState.Error(error.localizedMessage.orEmpty()))
             }
         }
     }
