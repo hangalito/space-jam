@@ -1,6 +1,7 @@
 package com.hangalo.spacejam.ui.components
 
 import android.content.Context
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -8,11 +9,14 @@ import androidx.compose.foundation.layout.Arrangement.SpaceBetween
 import androidx.compose.material3.*
 import androidx.compose.material3.CardDefaults.elevatedCardElevation
 import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.TooltipDefaults.rememberPlainTooltipPositionProvider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
+import androidx.compose.ui.Alignment.Companion.BottomEnd
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale.Companion.Crop
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -28,6 +32,7 @@ import com.hangalo.spacejam.domain.AstronomicPicture
 import com.hangalo.spacejam.ui.screens.UiState.Error
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AstronomicPictureView(
     apod: AstronomicPicture,
@@ -47,8 +52,20 @@ fun AstronomicPictureView(
             Text(
                 text = "${stringResource(id = R.string.date_label)} ${dateFormat(apod.date)}"
             )
-            IconButton(onClick = { onBookmarkClick(apod) }) {
-                Icon(painter = painterResource(id = R.drawable.ic_save), contentDescription = null)
+            TooltipBox(
+                positionProvider = rememberPlainTooltipPositionProvider(),
+                tooltip = { Text(text = "Bookmark this picture") },
+                state = rememberTooltipState()
+            ) {
+                IconButton(onClick = {
+                    onBookmarkClick(apod)
+                    Toast.makeText(context, "Action not available yet", Toast.LENGTH_LONG).show()
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_save),
+                        contentDescription = null
+                    )
+                }
             }
         }
         Box {
@@ -60,10 +77,10 @@ fun AstronomicPictureView(
                 contentScale = Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(16f / 9f )
+                    .aspectRatio(16f / 9f)
                     .padding(8.dp)
             )
-            Copyright(copyright = apod.copyright)
+            Copyright(copyright = apod.copyright, modifier = Modifier.align(BottomEnd))
         }
         Text(
             text = apod.title,
@@ -130,9 +147,13 @@ fun AstronomicPictureCard(
 
 @Composable
 @NonRestartableComposable
-fun Copyright(copyright: String) {
+fun Copyright(
+    copyright: String,
+    modifier: Modifier = Modifier,
+    color: Color = LocalContentColor.current
+) {
     if (copyright.isNotBlank()) {
-        Text(text = "© $copyright")
+        Text(text = "© $copyright", modifier, color)
     }
 }
 
