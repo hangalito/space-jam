@@ -1,18 +1,17 @@
 <resources>
-    <string name="app_name">Space Jam</string>
+    <string name="app_name" translatable="false">Space Jam</string>
 
     <!--region State messages-->
     <string name="loading">Loading</string>
     <string name="error_loading">Error loading the picture</string>
     <string name="retry">Try again</string>
     <string name="offline">Connection error</string>
-    <string name="invalid_date">"Date must be between Jun 16, 1995 and Mar 24, 2024."</string>
+    <string name="invalid_date">Date must be between Jun 16, 1995 and today</string>
     <!--endregion-->
 
     <!--region Menu options-->
     <string name="menu_today">Today</string>
     <string name="menu_yesterday">Yesterday</string>
-    <string name="menu_two_days_ago">2 days ago</string>
     <string name="menu_choose_day">Choose day</string>
     <string name="menu_date_from">See pictures from</string>
     <string name="menu_date_range">Date range</string>
@@ -25,7 +24,8 @@
     <string name="date_label">Date:</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
-    <string name="ok">OK</string>
+    <string name="ok" translatable="false">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="datePickerTitle">Select a date</string>
     <!--endregion-->
 </resources>
