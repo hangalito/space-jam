@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Space Jam"
+rootProject.name = "SpaceJam"
 include(":app")
