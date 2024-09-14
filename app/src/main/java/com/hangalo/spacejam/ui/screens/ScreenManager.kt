@@ -3,9 +3,13 @@ package com.hangalo.spacejam.ui.screens
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells.Adaptive
 import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -29,13 +33,21 @@ import kotlinx.coroutines.launch
 @NonRestartableComposable
 fun ScreenManager(
     uiState: UiState,
-    modifier: Modifier = Modifier,
     onRetryClick: () -> Unit,
 ) {
+    val modifier: Modifier = Modifier.fillMaxSize()
     when (uiState) {
         is Loading -> LoadingScreen(modifier)
         is Error -> ErrorScreen(uiState, modifier, onRetryClick = onRetryClick)
-        is SinglePicture -> SinglePictureView(data = uiState.picture, modifier)
+
+        is SinglePicture -> SinglePictureView(
+            data = uiState.picture,
+            modifier = Modifier
+                .fillMaxSize()
+                .wrapContentSize()
+                .verticalScroll(rememberScrollState())
+        )
+
         is MultiplePictures -> MultiplePicturesView(data = uiState.pictures, modifier)
     }
 }

@@ -43,7 +43,7 @@ fun AstronomicPictureView(
         modifier = modifier.padding(8.dp)
     ) {
         Row(
-            modifier = modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = SpaceBetween,
             verticalAlignment = CenterVertically
         ) {
@@ -77,10 +77,10 @@ fun AstronomicPictureView(
             )
         }
         Text(text = apod.title, style = typography.titleLarge)
-        HorizontalDivider(modifier.padding(vertical = 4.dp))
+        HorizontalDivider(Modifier.padding(vertical = 4.dp))
         Text(
             text = apod.explanation, textAlign = Justify,
-            letterSpacing = .3.sp, modifier = modifier.padding(8.dp)
+            letterSpacing = .3.sp, modifier = Modifier.padding(8.dp)
         )
     }
 }

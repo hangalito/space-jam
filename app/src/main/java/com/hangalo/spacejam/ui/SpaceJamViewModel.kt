@@ -110,6 +110,7 @@ class SpaceJamViewModel(private val repository: RemoteRepository) : ViewModel() 
         }
 
         viewModelScope.launch(Dispatchers.IO) {
+            _uiState.emit(UiState.Loading)
             try {
                 val result = repository.getPicturesWithinInterval(startDate, endDate)
                 _uiState.emit(UiState.Success.MultiplePictures(result))

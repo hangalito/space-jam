@@ -102,10 +102,8 @@ fun SpaceJamApp(
                 navController = navController,
                 startDestination = NavigationRoute.Home.name,
                 modifier = modifier
-                    .fillMaxSize()
                     .padding(innerPadding)
                     .nestedScroll(connection = scrollBehavior.nestedScrollConnection)
-                    .verticalScroll(rememberScrollState())
             ) {
                 composable(route = NavigationRoute.Home.name) {
                     ScreenManager(uiState = uiState, onRetryClick = viewModel.retry)
