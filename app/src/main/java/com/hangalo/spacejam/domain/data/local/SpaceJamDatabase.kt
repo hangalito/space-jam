@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.hangalo.spacejam.domain.AstronomicPicture
 
-
 @Database(entities = [AstronomicPicture::class], version = 2, exportSchema = false)
 abstract class SpaceJamDatabase : RoomDatabase() {
     abstract fun astronomicPictureDao(): AstronomicPictureDao

@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hangalo.spacejam.domain.data.remote.apod.APODRepository
+import com.hangalo.spacejam.domain.data.remote.RemoteRepository
 import com.hangalo.spacejam.ui.screens.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
-class SpaceJamViewModel(private val repository: APODRepository) : ViewModel() {
+class SpaceJamViewModel(private val repository: RemoteRepository) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
@@ -57,7 +57,7 @@ class SpaceJamViewModel(private val repository: APODRepository) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.emit(UiState.Loading)
             try {
-                val result = repository.getTodayPicture()
+                val result = repository.getNewestPicture()
                 _uiState.emit(UiState.Success.SinglePicture(result))
             } catch (ex: IOException) {
                 _uiState.emit(UiState.Error(ex.localizedMessage.orEmpty()))

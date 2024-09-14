@@ -7,11 +7,10 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.hangalo.spacejam.SpaceJamApplication
 import com.hangalo.spacejam.ui.SpaceJamViewModel
 
-
 object ViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
-            SpaceJamViewModel(spaceJamApplication().container.networkRepository)
+            SpaceJamViewModel(spaceJamApplication().container.remoteRepository)
         }
     }
 }

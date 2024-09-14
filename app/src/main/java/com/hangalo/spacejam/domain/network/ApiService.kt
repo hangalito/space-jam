@@ -5,7 +5,6 @@ import com.hangalo.spacejam.domain.AstronomicPicture
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-
 /**
  * API Service.
  * This interface exposes methods for operation in NASA APOD API.

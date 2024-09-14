@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-
 @Entity("astronomic_pictures")
 @Serializable
 data class AstronomicPicture(

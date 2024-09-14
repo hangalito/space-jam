@@ -1,10 +1,9 @@
 package com.hangalo.spacejam.domain.container
 
-import com.hangalo.spacejam.domain.data.local.SavedRepository
-import com.hangalo.spacejam.domain.data.remote.apod.APODRepository
-
+import com.hangalo.spacejam.domain.data.local.LocalRepository
+import com.hangalo.spacejam.domain.data.remote.RemoteRepository
 
 interface AppContainer {
-    val networkRepository: APODRepository
-    val savedRepository: SavedRepository
+    val remoteRepository: RemoteRepository
+    val localRepository: LocalRepository
 }

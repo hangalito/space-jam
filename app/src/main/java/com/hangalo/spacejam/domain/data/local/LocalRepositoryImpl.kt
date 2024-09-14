@@ -3,10 +3,9 @@ package com.hangalo.spacejam.domain.data.local
 import com.hangalo.spacejam.domain.AstronomicPicture
 import kotlinx.coroutines.flow.Flow
 
-
-class OfflineSavedRepository(private val astronomicPictureDao: AstronomicPictureDao) :
-    SavedRepository {
-    override suspend fun getAllStream(): Flow<List<AstronomicPicture>> {
+class LocalRepositoryImpl(private val astronomicPictureDao: AstronomicPictureDao) :
+    LocalRepository {
+    override fun getAllStream(): Flow<List<AstronomicPicture>> {
         return astronomicPictureDao.getAll()
     }
 

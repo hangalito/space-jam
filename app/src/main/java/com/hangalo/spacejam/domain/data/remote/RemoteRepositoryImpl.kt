@@ -1,15 +1,14 @@
-package com.hangalo.spacejam.domain.data.remote.apod
+package com.hangalo.spacejam.domain.data.remote
 
 import com.hangalo.spacejam.domain.AstronomicPicture
 import com.hangalo.spacejam.domain.network.ApiService
 import java.sql.Date
 
-
 /**
- * [APODRepository] implementation.
+ * [RemoteRepository] implementation.
  */
-data class NetworkRepository(private val apiService: ApiService) : APODRepository {
-    override suspend fun getTodayPicture(): AstronomicPicture {
+data class RemoteRepositoryImpl(private val apiService: ApiService) : RemoteRepository {
+    override suspend fun getNewestPicture(): AstronomicPicture {
         return apiService.getTodayPicture()
     }
 
@@ -19,19 +18,13 @@ data class NetworkRepository(private val apiService: ApiService) : APODRepositor
         return apiService.getPictureByDate(date)
     }
 
-    suspend fun get2daysAgoPicture(): AstronomicPicture {
-        val today = Date(System.currentTimeMillis()).toString().split("-")
-        val date = "${today.first()}-${today[1]}-${today.last().toInt() - 2}"
-        return apiService.getPictureByDate(date)
-    }
-
     override suspend fun getPictureByDate(dateMillis: Long): AstronomicPicture {
         val date = Date(dateMillis).toString()
         return apiService.getPictureByDate(date)
     }
 
-    override suspend fun getPicturesFrom(starDate: Long): List<AstronomicPicture> {
-        val date = Date(starDate).toString()
+    override suspend fun getPicturesFrom(startDate: Long): List<AstronomicPicture> {
+        val date = Date(startDate).toString()
         return apiService.getPicturesFrom(date)
     }
 

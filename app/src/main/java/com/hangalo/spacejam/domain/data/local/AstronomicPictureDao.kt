@@ -3,10 +3,10 @@ package com.hangalo.spacejam.domain.data.local
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.Companion.ABORT
 import androidx.room.Query
 import com.hangalo.spacejam.domain.AstronomicPicture
 import kotlinx.coroutines.flow.Flow
-
 
 /**
  * Provides access to the [AstronomicPicture] object
@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface AstronomicPictureDao {
-
     /**
      * Fetches all the pictures from the database
      */
@@ -31,7 +30,7 @@ interface AstronomicPictureDao {
     /**
      * Insert a picture into the database
      */
-    @Insert
+    @Insert(onConflict = ABORT)
     suspend fun insert(astronomicPicture: AstronomicPicture)
 
     /**
@@ -39,5 +38,4 @@ interface AstronomicPictureDao {
      */
     @Delete
     suspend fun delete(astronomicPicture: AstronomicPicture)
-
 }
