@@ -27,5 +27,6 @@
     <string name="ok" translatable="false">OK</string>
     <string name="cancel">Cancel</string>
     <string name="datePickerTitle">Select a date</string>
+    <string name="bookmarks">Bookmarks</string>
     <!--endregion-->
 </resources>

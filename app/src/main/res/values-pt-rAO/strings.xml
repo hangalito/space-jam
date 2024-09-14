@@ -18,4 +18,5 @@
     <string name="yesterday">Ontem</string>
     <string name="cancel">Cancelar</string>
     <string name="datePickerTitle">Selecionar data</string>
+    <string name="bookmarks">Bookmarks</string>
 </resources>

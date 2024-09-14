@@ -20,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hangalo.spacejam.R
 import com.hangalo.spacejam.domain.container.ViewModelProvider.Factory
@@ -27,6 +28,7 @@ import com.hangalo.spacejam.ui.components.SpaceJamDrawerSheet
 import com.hangalo.spacejam.ui.components.SpaceJamTopAppBar
 import com.hangalo.spacejam.ui.components.getSelectableDates
 import com.hangalo.spacejam.ui.screens.NavigationRoute
+import com.hangalo.spacejam.ui.screens.NavigationRoute.valueOf
 import com.hangalo.spacejam.ui.screens.ScreenManager
 import com.hangalo.spacejam.ui.screens.UiState
 import kotlinx.coroutines.launch
@@ -56,6 +58,9 @@ fun SpaceJamApp(
     val scrollBehavior = pinnedScrollBehavior()
     val context = LocalContext.current
 
+    val backStackState by navController.currentBackStackEntryAsState()
+    val title = valueOf(backStackState?.destination?.route ?: NavigationRoute.Home.name)
+
 
     DismissibleNavigationDrawer(
         drawerState = drawerState,
@@ -83,6 +88,7 @@ fun SpaceJamApp(
         Scaffold(
             topBar = {
                 SpaceJamTopAppBar(
+                    title = title.title,
                     scrollBehavior = scrollBehavior,
                     onMenuClick = {
                         coroutineScope.launch {
