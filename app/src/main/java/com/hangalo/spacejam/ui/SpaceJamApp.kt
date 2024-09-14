@@ -62,7 +62,7 @@ fun SpaceJamApp(
     val title = valueOf(backStackState?.destination?.route ?: NavigationRoute.Home.name)
 
 
-    DismissibleNavigationDrawer(
+    ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             SpaceJamDrawerSheet(

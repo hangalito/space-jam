@@ -45,7 +45,7 @@ fun SpaceJamDrawerSheet(
     onChooseDayClick: () -> Unit = {},
     onDateRangeClick: () -> Unit = {}
 ) {
-    DismissibleDrawerSheet(
+    ModalDrawerSheet(
         modifier = modifier.fillMaxHeight(),
         drawerShape = RoundedCornerShape(topEnd = 33.dp, bottomEnd = 33.dp),
     ) {
