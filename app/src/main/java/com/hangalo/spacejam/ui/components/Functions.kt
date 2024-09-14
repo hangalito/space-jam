@@ -2,6 +2,10 @@ package com.hangalo.spacejam.ui.components
 
 import android.content.Context
 import android.icu.text.DateFormat
+import android.icu.util.Calendar
+import android.icu.util.Calendar.JUNE
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SelectableDates
 import coil.ImageLoader
 import coil.request.CachePolicy.ENABLED
 import coil.request.ImageRequest
@@ -39,4 +43,25 @@ fun dateFormat(dateTime: String): String {
 
 fun dateFormat(time: Long): String {
     return DateFormat.getDateInstance().format(Date(time))
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+fun getSelectableDates(): SelectableDates {
+    val currentYear: Int = Calendar.getInstance().get(Calendar.YEAR)
+    val currentDate: Long = Calendar.getInstance().timeInMillis
+    val initialDate: Long = Calendar.getInstance().apply {
+        clear()
+        set(1995, JUNE, 16)
+    }.timeInMillis
+    return object : SelectableDates {
+
+        override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+            return utcTimeMillis in initialDate..currentDate
+        }
+
+        override fun isSelectableYear(year: Int): Boolean {
+            return year in 1995..currentYear
+        }
+
+    }
 }

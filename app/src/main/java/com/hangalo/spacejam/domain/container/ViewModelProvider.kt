@@ -4,13 +4,14 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.hangalo.spacejam.ui.screens.home.HomeViewModel
+import com.hangalo.spacejam.SpaceJamApplication
+import com.hangalo.spacejam.ui.SpaceJamViewModel
 
 
 object ViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
-            HomeViewModel(spaceJamApplication().container.networkRepository)
+            SpaceJamViewModel(spaceJamApplication().container.networkRepository)
         }
     }
 }

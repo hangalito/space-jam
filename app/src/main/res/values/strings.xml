@@ -6,7 +6,7 @@
     <string name="error_loading">Error loading the picture</string>
     <string name="retry">Try again</string>
     <string name="offline">Connection error</string>
-    <string name="invalid_date">Date must be between Jun 16, 1995 and today</string>
+    <string name="invalid_date">Date must be between Jun 16, 1995 and the current date</string>
     <!--endregion-->
 
     <!--region Menu options-->

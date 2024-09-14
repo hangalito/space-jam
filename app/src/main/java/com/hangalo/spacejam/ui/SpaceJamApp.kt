@@ -1,57 +1,97 @@
 package com.hangalo.spacejam.ui
 
-import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.material3.DrawerValue.Closed
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hangalo.spacejam.R
+import com.hangalo.spacejam.domain.container.ViewModelProvider.Factory
+import com.hangalo.spacejam.ui.components.SpaceJamDrawerSheet
+import com.hangalo.spacejam.ui.components.SpaceJamTopAppBar
+import com.hangalo.spacejam.ui.components.getSelectableDates
 import com.hangalo.spacejam.ui.screens.NavigationRoute
-import com.hangalo.spacejam.ui.screens.home.HomeScreen
+import com.hangalo.spacejam.ui.screens.ScreenManager
+import com.hangalo.spacejam.ui.screens.UiState
 import kotlinx.coroutines.launch
 
-
-/**
- * The main composable for the app.
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SpaceJamApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    scrollBehavior: TopAppBarScrollBehavior = pinnedScrollBehavior()
+    viewModel: SpaceJamViewModel = viewModel(factory = Factory),
 ) {
-    val drawerState = rememberDrawerState(initialValue = Closed)
+    val uiState: UiState by viewModel.uiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+    val drawerState = rememberDrawerState(initialValue = Closed)
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = viewModel.currentDateMillis(),
+        selectableDates = getSelectableDates(),
+        yearRange = viewModel.yearRange
+    )
+    val dateRangePickerState = rememberDateRangePickerState(
+        initialSelectedStartDateMillis = viewModel.currentDateMillis(),
+        initialSelectedEndDateMillis = viewModel.currentDateMillis(),
+        initialDisplayMode = DisplayMode.Input,
+        selectableDates = getSelectableDates(),
+        yearRange = viewModel.yearRange
+    )
+    val scrollBehavior = pinnedScrollBehavior()
+    val context = LocalContext.current
+
 
     DismissibleNavigationDrawer(
-        drawerContent = { SpaceJamDrawerSheet() },
-        drawerState = drawerState
+        drawerState = drawerState,
+        drawerContent = {
+            SpaceJamDrawerSheet(
+                onTodayClick = {
+                    coroutineScope.launch { drawerState.close() }
+                    viewModel.getTodayPicture()
+                },
+                onYesterdayClick = {
+                    coroutineScope.launch { drawerState.close() }
+                    viewModel.getYesterdayPicture()
+                },
+                onChooseDayClick = {
+                    coroutineScope.launch { drawerState.close() }
+                    viewModel.showDatePicker()
+                },
+                onDateRangeClick = {
+                    coroutineScope.launch { drawerState.close() }
+                    viewModel.showDateRangePicker()
+                },
+            )
+        }
     ) {
         Scaffold(
             topBar = {
                 SpaceJamTopAppBar(
                     scrollBehavior = scrollBehavior,
-                    onMenuClick = { coroutineScope.launch { if (drawerState.isOpen) drawerState.close() else drawerState.open() } })
+                    onMenuClick = {
+                        coroutineScope.launch {
+                            if (drawerState.isOpen) drawerState.close() else drawerState.open()
+                        }
+                    }
+                )
             },
+            snackbarHost = { SnackbarHost(hostState = viewModel.snackbarHostState) }
         ) { innerPadding: PaddingValues ->
             NavHost(
                 navController = navController,
@@ -63,95 +103,44 @@ fun SpaceJamApp(
                     .verticalScroll(rememberScrollState())
             ) {
                 composable(route = NavigationRoute.Home.name) {
-                    HomeScreen(modifier)
+                    ScreenManager(uiState = uiState, onRetryClick = viewModel.retry)
                 }
             }
         }
     }
-}
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SpaceJamTopAppBar(
-    modifier: Modifier = Modifier,
-    @StringRes title: Int = R.string.app_name,
-    scrollBehavior: TopAppBarScrollBehavior? = null,
-    onMenuClick: () -> Unit = {}
-) {
-    TopAppBar(
-        modifier = modifier,
-        title = { Text(stringResource(title)) },
-        scrollBehavior = scrollBehavior,
-        navigationIcon = {
-            IconButton(onClick = onMenuClick) {
-                Icon(Icons.Default.Menu, contentDescription = null)
+    when {
+        viewModel.showingDatePicker -> {
+            DatePickerDialog(
+                onDismissRequest = viewModel::hideDatePicker,
+                confirmButton = {
+                    TextButton(onClick = {
+                        if (datePickerState.selectedDateMillis != null) {
+                            viewModel.chooseDate(datePickerState.selectedDateMillis, context)
+                        }
+                    }) {
+                        Text(stringResource(R.string.ok))
+                    }
+                }
+            ) {
+                DatePicker(state = datePickerState)
             }
         }
-    )
-}
 
-@Composable
-fun SpaceJamDrawerSheet(modifier: Modifier = Modifier) {
-    DismissibleDrawerSheet(
-        modifier = modifier.fillMaxHeight(),
-        drawerShape = RoundedCornerShape(topEnd = 33.dp, bottomEnd = 33.dp),
-    ) {
-        Text(
-            text = stringResource(id = R.string.app_name),
-            style = typography.displaySmall,
-            modifier = Modifier.padding(12.dp)
-        )
-        NavigationDrawerItem(
-            label = { Text(stringResource(R.string.today)) },
-            selected = false,
-            onClick = { /*TODO*/ },
-            icon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_today),
-                    contentDescription = null
-                )
+        viewModel.showingDateRangePicker -> {
+            DatePickerDialog(
+                onDismissRequest = viewModel::hideDateRangePicker,
+                confirmButton = {
+                    TextButton(onClick = {
+                        val startDate = dateRangePickerState.selectedStartDateMillis
+                        val endDate = dateRangePickerState.selectedEndDateMillis
+                        viewModel.getPictureIn(startDate, endDate, context)
+                    }) {
+                        Text(stringResource(R.string.ok))
+                    }
+                }) {
+                DateRangePicker(state = dateRangePickerState)
             }
-        )
-        NavigationDrawerItem(
-            label = { Text(stringResource(R.string.yesterday)) },
-            selected = false,
-            onClick = { /*TODO*/ },
-            icon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_yesterday),
-                    contentDescription = null,
-                    modifier = Modifier.size(22.dp)
-                )
-            }
-        )
-        NavigationDrawerItem(
-            label = { Text(stringResource(R.string.menu_choose_day)) },
-            selected = false,
-            onClick = { /*TODO*/ },
-            icon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_select_date),
-                    contentDescription = null
-                )
-            }
-        )
-        NavigationDrawerItem(
-            label = { Text(stringResource(R.string.menu_date_range)) },
-            selected = false,
-            onClick = { /*TODO*/ },
-            icon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_date_range),
-                    contentDescription = null
-                )
-            }
-        )
+        }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview
-@Composable
-private fun SpaceJamTopAppBarPreview() {
-    SpaceJamTopAppBar()
 }

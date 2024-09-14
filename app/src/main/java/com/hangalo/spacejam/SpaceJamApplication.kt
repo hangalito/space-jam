@@ -1,6 +1,7 @@
-package com.hangalo.spacejam.domain.container
+package com.hangalo.spacejam
 
 import android.app.Application
+import com.hangalo.spacejam.domain.container.AppContainer
 import com.hangalo.spacejam.domain.data.DefaultAppContainer
 
 
