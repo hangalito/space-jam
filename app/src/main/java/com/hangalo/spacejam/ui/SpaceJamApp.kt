@@ -91,7 +91,6 @@ fun SpaceJamApp(
                     }
                 )
             },
-            snackbarHost = { SnackbarHost(hostState = viewModel.snackbarHostState) }
         ) { innerPadding: PaddingValues ->
             NavHost(
                 navController = navController,

@@ -2,13 +2,11 @@ package com.hangalo.spacejam.ui
 
 import android.content.Context
 import android.icu.util.Calendar
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hangalo.spacejam.R
 import com.hangalo.spacejam.domain.data.remote.apod.APODRepository
 import com.hangalo.spacejam.ui.screens.UiState
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +23,6 @@ class SpaceJamViewModel(private val repository: APODRepository) : ViewModel() {
 
     val yearRange: IntRange = 1995..Calendar.getInstance().get(Calendar.YEAR)
     val currentDateMillis: () -> Long = { Calendar.getInstance().timeInMillis }
-    val snackbarHostState: SnackbarHostState by lazy { SnackbarHostState() }
 
     var showingDatePicker: Boolean by mutableStateOf(false)
         private set
@@ -52,10 +49,6 @@ class SpaceJamViewModel(private val repository: APODRepository) : ViewModel() {
 
     fun hideDateRangePicker() {
         viewModelScope.launch { showingDateRangePicker = false }
-    }
-
-    private fun showSnackbar(message: String) {
-        viewModelScope.launch { snackbarHostState.showSnackbar(message) }
     }
     /*endregion*/
 
@@ -91,8 +84,7 @@ class SpaceJamViewModel(private val repository: APODRepository) : ViewModel() {
         retry = { chooseDate(dateMillis, context) }
         hideDatePicker()
 
-        if (dateMillis == null || dateMillis > currentDateMillis()) {
-            showSnackbar(context.getString(R.string.invalid_date))
+        if (dateMillis == null) {
             return
         }
 
@@ -112,20 +104,19 @@ class SpaceJamViewModel(private val repository: APODRepository) : ViewModel() {
     fun getPictureIn(startDate: Long?, endDate: Long?, context: Context) {
         retry = { getPictureIn(startDate, endDate, context) }
         hideDateRangePicker()
+
         if ((startDate == null) || (endDate == null)) {
-            showSnackbar("Invalid date format")
-        } else if (startDate > currentDateMillis()) {
-            showSnackbar(context.getString(R.string.invalid_date))
-        } else {
-            viewModelScope.launch(Dispatchers.IO) {
-                try {
-                    val result = repository.getPicturesWithinInterval(startDate, endDate)
-                    _uiState.emit(UiState.Success.MultiplePictures(result))
-                } catch (ex: IOException) {
-                    _uiState.emit(UiState.Error(ex.localizedMessage.orEmpty()))
-                } catch (ex: HttpException) {
-                    _uiState.emit(UiState.Error("${ex.response()?.message()}"))
-                }
+            return
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val result = repository.getPicturesWithinInterval(startDate, endDate)
+                _uiState.emit(UiState.Success.MultiplePictures(result))
+            } catch (ex: IOException) {
+                _uiState.emit(UiState.Error(ex.localizedMessage.orEmpty()))
+            } catch (ex: HttpException) {
+                _uiState.emit(UiState.Error("${ex.response()?.message()}"))
             }
         }
     }
