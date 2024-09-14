@@ -7,14 +7,14 @@ plugins {
 
 android {
     namespace = "com.hangalo.spacejam"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.hangalo.spacejam"
         minSdk = 29
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.3.2"
 
         buildConfigField(
             type = "String",
@@ -77,7 +77,6 @@ dependencies {
 
     // Compose Navigation
     implementation(libs.navigation.compose)
-    implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.viewmodel.savedstate)
