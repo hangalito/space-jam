@@ -1,20 +1,16 @@
 package com.hangalo.spacejam.ui.screens
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells.Adaptive
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -27,7 +23,6 @@ import com.hangalo.spacejam.ui.screens.UiState.Error
 import com.hangalo.spacejam.ui.screens.UiState.Loading
 import com.hangalo.spacejam.ui.screens.UiState.Success.MultiplePictures
 import com.hangalo.spacejam.ui.screens.UiState.Success.SinglePicture
-import kotlinx.coroutines.launch
 
 @Composable
 @NonRestartableComposable
@@ -63,20 +58,15 @@ fun MultiplePicturesView(
     modifier: Modifier = Modifier,
 ) {
     val gap: Dp = 8.dp
-    val coroutineScope = rememberCoroutineScope()
-    val context = LocalContext.current
 
-    LazyVerticalStaggeredGrid(
-        columns = Adaptive(minSize = 150.dp),
-        modifier = modifier,
-        verticalItemSpacing = gap,
+    LazyColumn(
         contentPadding = PaddingValues(12.dp),
-        horizontalArrangement = Arrangement.spacedBy(gap)
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(gap)
     ) {
         items(data) { apod ->
-            AstronomicPictureCard(apod) { loader, request ->
-                coroutineScope.launch { loader.execute(request) }
-                Toast.makeText(context, "Reloading ${apod.title}", Toast.LENGTH_SHORT).show()
+            if (apod.mediaType == "image") {
+                AstronomicPictureCard(apod)
             }
         }
     }

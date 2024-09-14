@@ -2,14 +2,23 @@ package com.hangalo.spacejam.ui.components
 
 import android.content.Context
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.SpaceBetween
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Alignment.Companion.BottomEnd
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
@@ -89,19 +98,17 @@ fun AstronomicPictureView(
 fun AstronomicPictureCard(
     apod: AstronomicPicture,
     modifier: Modifier = Modifier,
-    loadPicture: (ImageLoader, ImageRequest) -> Unit = { _: ImageLoader, _: ImageRequest -> }
+    bookMarked: (AstronomicPicture) -> Boolean = { false },
+    bookMark: (AstronomicPicture) -> Unit = {}
 ) {
     val context: Context = LocalContext.current
     val imageLoader: ImageLoader = imageLoader(context)
     val imageRequest: ImageRequest = imageRequest(context, apod.url)
+    val painter = painterResource(if (bookMarked(apod)) R.drawable.ic_saved else R.drawable.ic_save)
 
-    ElevatedCard(
-        modifier = modifier,
-    ) {
-        Column(
-            modifier = Modifier,
-            horizontalAlignment = CenterHorizontally
-        ) {
+
+    OutlinedCard(modifier = modifier.fillMaxWidth()) {
+        Column {
             Box {
                 AsyncImage(
                     contentDescription = apod.title,
@@ -110,8 +117,8 @@ fun AstronomicPictureCard(
                     placeholder = painterResource(id = R.drawable.ic_img_placeholder),
                     contentScale = Crop,
                     modifier = Modifier
-                        .aspectRatio(4f / 3f)
-                        .clickable { loadPicture(imageLoader, imageRequest) }
+                        .aspectRatio(16f / 9f / .75f)
+                        .clickable { imageLoader.enqueue(imageRequest) }
                 )
                 Copyright(
                     copyright = apod.copyright,
@@ -122,11 +129,22 @@ fun AstronomicPictureCard(
             }
             Text(
                 apod.title,
-                style = typography.titleSmall,
+                style = typography.titleMedium,
                 textAlign = Center,
-                modifier = Modifier.padding(4.dp)
+                modifier = Modifier.padding(8.dp)
             )
-            Text(text = dateFormat(apod.date), style = typography.labelSmall)
+            Row(
+                horizontalArrangement = SpaceBetween,
+                verticalAlignment = CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
+            ) {
+                Text(text = dateFormat(apod.date), style = typography.labelMedium)
+                IconButton(onClick = { bookMark(apod) }) {
+                    Icon(painter = painter, contentDescription = null)
+                }
+            }
         }
     }
 }
@@ -144,13 +162,13 @@ private fun Copyright(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun AstronomicPicturePreview() {
     AstronomicPictureView(mockData)
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun AstronomicPictureCardPreview() {
     AstronomicPictureCard(mockData)
